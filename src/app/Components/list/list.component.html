@@ -1,0 +1,118 @@
+<!-- <div class="page"> -->
+<!-- 
+<div *ngFor="let thisListx of this.ListService.listOfLists" class="list-item-row">
+    {{thisListx.ListID}}
+    <div *ngFor="let thisListItemx of thisListx.List" class="list-item-row">
+        {{thisListItemx.Text}}
+    </div>
+</div> -->
+
+<div *ngFor="let thisList of this.ListService.listOfLists" class="list-container">
+
+    <!-- list heading -->
+    <div *ngIf="thisList.isShowListActive === false" class="list-heading-container" (click)="thisList.showHideList()"
+        style="background-color: {{thisList.ListColour}};">
+
+        <div class="list-heading-text-container">
+            <a class="list-heading-text">{{this.thisList.ListTitle}}</a>
+        </div>
+        <img class="list-heading-arrow-down" src="assets/arrow.png">
+    </div>
+
+    <div *ngIf="thisList.isShowListActive === true" class="list-heading-container"
+        style="background-color: {{thisList.ListColour}};">
+
+        <div *ngIf="thisList.isListRenameActive === false" class="list-heading-text-container"
+            (click)="thisList.showHideList()">
+            <a class="list-heading-text">{{this.thisList.ListTitle}}</a>
+        </div>
+        <div *ngIf="thisList.isListRenameActive === true" class="list-heading-text-container">
+            <input id="list-heading-text{{thisList.ListID}}" class="list-heading-input"
+                placeholder="{{this.thisList.ListTitle}}" (keyup.enter)="thisList.submitNewListTitle()">
+                
+        </div>
+
+        <img class="list-heading-gear" id="options-gear{{thisList.ListID}}" src="assets/gear.png"
+            (click)="thisList.showHideListOptions()">
+        <img class="list-heading-arrow-up" id="list-heading-arrow{{thisList.ListID}}" (click)="thisList.showHideList()"
+            src="assets/arrow.png">
+    </div>
+
+    <!-- list options -->
+    <div *ngIf="thisList.isShowListOptionsActive === true" class="list-options-container"
+        id="list-options-container{{thisList.ListID}}" style="background-color: {{thisList.ListColour}};">
+        <button class="options-button" id="list-options-button-ct{{thisList.ListID}}"
+            (click)="thisList.showHideListColourOptions()">
+            <a>list colour</a></button>
+        <button class="options-button" id="list-options-button-rl{{thisList.ListID}}"
+            (click)="thisList.renameThisList(thisList.ListID)">
+            <a>rename list</a></button>
+        <button class="options-button" id="list-options-button-dl{{thisList.ListID}}"
+            (click)="thisList.showDeleteThisListOptions(thisListItem.ID)"><a>delete list</a></button>
+        <button class="options-button" id="list-options-button-ra{{thisList.ListID}}"
+            (click)="thisList.removeAllCheckedItems(thisListItem.ID)"><a>remove checked</a></button>
+    </div>
+
+    <!-- list options - colour themes -->
+    <div *ngIf="thisList.isShowListColourOptionsActive === true" class="list-options-container"
+        id="list-colour-options-container{{thisList.ListID}}" style="background-color: {{thisList.ListColour}};">
+        <div *ngFor="let thisColour of this.ListService.listOfColourThemes">
+            <button *ngIf="thisColour === thisList.ListColour" class="colour-theme-button"
+                style="background-color: {{thisColour}};" style="border-color: white;"
+                (click)="thisList.applyListColourTheme(thisColour)"></button>
+            <button *ngIf="thisColour != thisList.ListColour" class="colour-theme-button"
+                style="background-color: {{thisColour}};" (click)="thisList.applyListColourTheme(thisColour)"></button>
+        </div>
+    </div>
+
+    <!-- list items -->
+    <div *ngIf="thisList.isShowListActive === true" id="list-content-container{{thisList.ListID}}"
+        class="list-content-container-open">
+
+        <div *ngFor="let thisListItem of thisList.List" class="list-item-row">
+            <div class="list-item-container">
+                <div class="list-item-accent" style="background-color: {{thisList.ListColour}};">
+                </div>
+                <div class="list-item-text-container" (click)="thisList.checkThisListItem(thisListItem.ID)">
+                    <a *ngIf="thisListItem.isChecked === false" class="list-item-text">{{thisListItem.Text}}</a>
+                    <a *ngIf="thisListItem.isChecked === true" class="list-item-text-checked">{{thisListItem.Text}}</a>
+                </div>
+                <button *ngIf="thisListItem.isChecked === true" class="remove-button"
+                    (click)="thisList.deleteThisListItem(thisListItem.ID)">x</button>
+            </div>
+        </div>
+
+        <!-- input new list item -->
+        <div *ngIf="thisList.isAddListItemsActive === true" class="list-item-row">
+            <div class="input-list-item-container">
+                <div class="list-item-accent" style="background-color: {{thisList.ListColour}};">
+                </div>
+                <input class="input-field" type="text" id="inputfield{{thisList.ListID}}" name="new list item"
+                    placeholder="new list item" (keyup.enter)="thisList.addNewListItem()"
+                    (focus)="thisList.setInputFocus()">
+                <button class="add-button" id="newlistitemaddbutton" (click)="thisList.addNewListItem()"
+                    style="background-color: {{thisList.ListColour}};"> Add
+                </button>
+            </div>
+        </div>
+
+        <!-- add new list item button -->
+        <div *ngIf="thisList.isAddListItemsActive === false" class="add-list-item-row">
+            <button class="add-items-button" (click)="thisList.activateAddListItems()"
+                style="background-color: {{thisList.ListColour}};">+</button>
+        </div>
+        <div *ngIf="thisList.isAddListItemsActive === true" class="add-list-item-row">
+            <button class="done-button" (click)="thisList.stopAddListItems()">
+                <a class="material-icons">
+                    done
+                </a>
+            </button>
+        </div>
+
+        <!-- footer -->
+        <div class="list-footer">
+        </div>
+
+    </div>
+
+</div>
