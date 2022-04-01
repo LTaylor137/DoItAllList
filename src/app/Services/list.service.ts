@@ -27,7 +27,7 @@ export class ListService {
         item.List.forEach(item => {
           console.log(item)
         })
-
+ 
       }
     }
     )
