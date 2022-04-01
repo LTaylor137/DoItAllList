@@ -7,62 +7,67 @@
     </div>
 </div> -->
 
-<div *ngFor="let thisList of this.ListService.listOfLists" class="list-container">
+<div *ngFor="let thisList of this.ListService.listOfLists" [List]="thisList" class="list-container">
 
     <!-- list heading -->
-    <div *ngIf="thisList.isShowListActive === false" class="list-heading-container" (click)="thisList.showHideList()"
+    <div *ngIf="thisList.isShowListActive === true" class="list-heading-container"
+        style="background-color: {{thisList.ListColour}};">
+        <div *ngIf="thisList.isListRenameActive === false" class="list-heading-text-container"
+            (click)="showHideList(thisList.ListID)">
+            <a class="list-heading-text">{{thisList.ListTitle}}</a>
+        </div>
+        <div *ngIf="thisList.isListRenameActive === true" class="list-heading-text-container">
+            <input id="list-heading-text{{thisList.ListID}}" class="list-heading-input"
+                placeholder="{{thisList.ListTitle}}" (keyup.enter)="submitNewListTitle(thisList.ListID)">
+        </div>
+        <img class="list-heading-gear" id="options-gear{{thisList.ListID}}" src="assets/gear.png"
+            (click)="showHideListOptions(thisList.ListID)">
+        <img class="list-heading-arrow-up" id="list-heading-arrow{{thisList.ListID}}" (click)="showHideList(thisList.ListID)"
+            src="assets/arrow.png">
+    </div>
+
+    <div *ngIf="thisList.isShowListActive === false" class="list-heading-container" (click)="showHideList(thisList.ListID)"
         style="background-color: {{thisList.ListColour}};">
 
         <div class="list-heading-text-container">
-            <a class="list-heading-text">{{this.thisList.ListTitle}}</a>
+            <a class="list-heading-text">{{thisList.ListTitle}}</a>
         </div>
         <img class="list-heading-arrow-down" src="assets/arrow.png">
     </div>
 
-    <div *ngIf="thisList.isShowListActive === true" class="list-heading-container"
-        style="background-color: {{thisList.ListColour}};">
-
-        <div *ngIf="thisList.isListRenameActive === false" class="list-heading-text-container"
-            (click)="thisList.showHideList()">
-            <a class="list-heading-text">{{this.thisList.ListTitle}}</a>
-        </div>
-        <div *ngIf="thisList.isListRenameActive === true" class="list-heading-text-container">
-            <input id="list-heading-text{{thisList.ListID}}" class="list-heading-input"
-                placeholder="{{this.thisList.ListTitle}}" (keyup.enter)="thisList.submitNewListTitle()">
-                
-        </div>
-
-        <img class="list-heading-gear" id="options-gear{{thisList.ListID}}" src="assets/gear.png"
-            (click)="thisList.showHideListOptions()">
-        <img class="list-heading-arrow-up" id="list-heading-arrow{{thisList.ListID}}" (click)="thisList.showHideList()"
-            src="assets/arrow.png">
-    </div>
-
     <!-- list options -->
-    <div *ngIf="thisList.isShowListOptionsActive === true" class="list-options-container"
+    <div *ngIf="thisList.isShowListOptionsActive === true" class="list-options-container-open"
         id="list-options-container{{thisList.ListID}}" style="background-color: {{thisList.ListColour}};">
         <button class="options-button" id="list-options-button-ct{{thisList.ListID}}"
-            (click)="thisList.showHideListColourOptions()">
+            (click)="showHideListColourOptions(thisList.ListID)">
             <a>list colour</a></button>
         <button class="options-button" id="list-options-button-rl{{thisList.ListID}}"
-            (click)="thisList.renameThisList(thisList.ListID)">
+            (click)="showRenameListOption(thisList.ListID)">
             <a>rename list</a></button>
         <button class="options-button" id="list-options-button-dl{{thisList.ListID}}"
-            (click)="thisList.showDeleteThisListOptions(thisListItem.ID)"><a>delete list</a></button>
+            (click)="showDeleteListOptions(thisList.ListID)"><a>delete list</a></button>
         <button class="options-button" id="list-options-button-ra{{thisList.ListID}}"
-            (click)="thisList.removeAllCheckedItems(thisListItem.ID)"><a>remove checked</a></button>
+            (click)="removeAllCheckedItems(thisList.ListID)"><a>remove checked</a></button>
     </div>
 
     <!-- list options - colour themes -->
-    <div *ngIf="thisList.isShowListColourOptionsActive === true" class="list-options-container"
+    <div *ngIf="thisList.isShowListColourOptionsActive === true" class="list-options-container-open"
         id="list-colour-options-container{{thisList.ListID}}" style="background-color: {{thisList.ListColour}};">
         <div *ngFor="let thisColour of this.ListService.listOfColourThemes">
             <button *ngIf="thisColour === thisList.ListColour" class="colour-theme-button"
                 style="background-color: {{thisColour}};" style="border-color: white;"
-                (click)="thisList.applyListColourTheme(thisColour)"></button>
+                (click)="applyListColourTheme(thisList.ListID, thisColour)"></button>
             <button *ngIf="thisColour != thisList.ListColour" class="colour-theme-button"
-                style="background-color: {{thisColour}};" (click)="thisList.applyListColourTheme(thisColour)"></button>
+                style="background-color: {{thisColour}};" (click)="applyListColourTheme(thisList.ListID, thisColour)"></button>
         </div>
+    </div>
+
+    <!-- list options - delete list -->
+    <div *ngIf="thisList.isDeleteListOptionsActive === true" class="list-options-container-open"
+        style="background-color: {{thisList.ListColour}};">
+        <a class="deleteListQueryText">are you sure you want to delete this list?</a>
+        <button class="options-button" (click)="showDeleteListOptions(thisList.ListID)">cancel</button>
+        <button class="options-button" (click)="deleteList(thisList.ListID)">delete</button>
     </div>
 
     <!-- list items -->
@@ -73,12 +78,12 @@
             <div class="list-item-container">
                 <div class="list-item-accent" style="background-color: {{thisList.ListColour}};">
                 </div>
-                <div class="list-item-text-container" (click)="thisList.checkThisListItem(thisListItem.ID)">
+                <div class="list-item-text-container" (click)="checkThisListItem(thisList.ListID, thisListItem.ListItemID)">
                     <a *ngIf="thisListItem.isChecked === false" class="list-item-text">{{thisListItem.Text}}</a>
                     <a *ngIf="thisListItem.isChecked === true" class="list-item-text-checked">{{thisListItem.Text}}</a>
                 </div>
                 <button *ngIf="thisListItem.isChecked === true" class="remove-button"
-                    (click)="thisList.deleteThisListItem(thisListItem.ID)">x</button>
+                    (click)="deleteThisListItem(thisList.ListID, thisListItem.ListItemID)">x</button>
             </div>
         </div>
 
@@ -88,21 +93,21 @@
                 <div class="list-item-accent" style="background-color: {{thisList.ListColour}};">
                 </div>
                 <input class="input-field" type="text" id="inputfield{{thisList.ListID}}" name="new list item"
-                    placeholder="new list item" (keyup.enter)="thisList.addNewListItem()"
-                    (focus)="thisList.setInputFocus()">
-                <button class="add-button" id="newlistitemaddbutton" (click)="thisList.addNewListItem()"
-                    style="background-color: {{thisList.ListColour}};"> Add
+                    placeholder="new list item" (keyup.enter)="addNewListItem(thisList.ListID)"
+                    (focus)="setInputBorderColour(thisList.ListID)">
+                <button class="add-button" id="newlistitemaddbutton" (click)="addNewListItem(thisList.ListID)"
+                    style="background-color: {{thisList.ListColour}};"> add
                 </button>
             </div>
         </div>
 
         <!-- add new list item button -->
         <div *ngIf="thisList.isAddListItemsActive === false" class="add-list-item-row">
-            <button class="add-items-button" (click)="thisList.activateAddListItems()"
+            <button class="add-items-button" (click)="activateAddListItems(thisList.ListID)"
                 style="background-color: {{thisList.ListColour}};">+</button>
         </div>
         <div *ngIf="thisList.isAddListItemsActive === true" class="add-list-item-row">
-            <button class="done-button" (click)="thisList.stopAddListItems()">
+            <button class="done-button" (click)="stopAddListItems(thisList.ListID)">
                 <a class="material-icons">
                     done
                 </a>

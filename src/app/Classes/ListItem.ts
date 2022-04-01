@@ -1,15 +1,15 @@
 
 export class ListItem {
-    ID: number;
+    ListItemID: number;
     Text: string;
     isChecked: boolean;
 
     constructor(
-        _ID: number, _Text: string
+        _ListItemID: number, _Text: string
         ) 
          
          {
-         this.ID = _ID;
+         this.ListItemID = _ListItemID;
          this.Text = _Text;
          this.isChecked = false;
          }

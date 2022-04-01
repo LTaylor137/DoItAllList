@@ -1,19 +1,12 @@
 import { Injectable } from '@angular/core';
 import { List } from '../Classes/List';
 import { ListItem } from '../Classes/ListItem';
-import { ListComponent } from '../Components/list/list.component';
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ListService {
-
-  // listOfLists: List[] = [];
-  // isAddListItemsActive: boolean = false;
-  // isShowList: boolean = true;
 
   listOfLists: List[] = [];
   listOfColourThemes: string[] = [];
@@ -66,6 +59,7 @@ export class ListService {
     )
   }
 
+  // a quick hack to change list container style to non-animated version on initial load.
   changeListClass() {
     setTimeout(() => {
       this.listOfLists.forEach(List => {
@@ -76,7 +70,6 @@ export class ListService {
   }
 
   createNewList() {
-
     // create a temporary array of available ID's and select the first available ID
     let newIDsAvailable: number[] = [];
     for (let i = 1; i < (this.listOfLists.length + 2); i++) {
@@ -92,38 +85,17 @@ export class ListService {
     // get a random colour
     let randomColour: string = this.listOfColourThemes[Math.floor(Math.random() * this.listOfColourThemes.length)]
     // add the new List using that new ID
-    this.listOfLists.push(new List(newListItemID, "", randomColour))
-    this.changeListClass();
-    this.listOfLists[newListItemID-1].renameThisList();
+    this.listOfLists.push(new List(newListItemID, "New List", randomColour))
+    // this.changeListClass();
+    // this.listOfLists[newListItemID-1].showRenameListOption(1);
+  }
+
+  deleteThisList(listItemIndex) {
+    console.log("deleting list = " + listItemIndex)
+    this.listOfLists.splice(listItemIndex, 1)
   }
 
 }
-
-
-          // // create a temporary array of available ID's and select the first available ID
-          // let newIDsAvailable: number[] = [];
-          // for (let i = 1; i < (this.List.length + 2); i++) {
-          //   if (this.List.find((ListItem) => ListItem.ID === i)) {
-          //     //do nothing
-          //     console.log("the id " + i + " already exists and was not added")
-          //   } else {
-          //     newIDsAvailable.push(i)
-          //     console.log("the available id " + i + " was added")
-          //   }
-          // }
-          // let newListItemID: number = newIDsAvailable[0];
-          // // add the list item using that new ID and text from the input field
-          // let newListItemText = (<HTMLInputElement>document.getElementById("inputfield" + this.ListID)).value
-          // this.List.push(new ListItem(newListItemID, (newListItemText)));
-          // this.List.forEach(listitem => {
-          //   console.log(listitem)
-          // });
-          // (<HTMLInputElement>document.getElementById("inputfield" + this.ListID)).value = '';
-          // (<HTMLInputElement>document.getElementById("inputfield" + this.ListID)).focus();
-
-
-
-
 
 
 

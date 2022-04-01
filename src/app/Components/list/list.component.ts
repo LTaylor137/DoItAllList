@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { ListService } from 'src/app/Services/list.service';
+import { List } from 'src/app/Classes/List';
 import { ListItem } from '../../Classes/ListItem';
 
 @Component({
@@ -9,11 +10,251 @@ import { ListItem } from '../../Classes/ListItem';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  
+
   constructor(public ListService: ListService) { }
+
+  // @Input() List: List;
 
   ngOnInit(): void {
 
   }
+
+  returnThisListIndex(thisListID) {
+    let listIndex = this.ListService.listOfLists.findIndex(function (listObject) {
+      return listObject.ListID === thisListID;
+    });
+    console.log("ListID = " + thisListID + " Index = " + listIndex)
+    return listIndex;
+  }
+
+  showHideList(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    if (this.ListService.listOfLists[listIndex].isShowListActive === false) {
+
+      this.ListService.listOfLists[listIndex].isShowListActive = true;
+      setTimeout(() => {
+        document.getElementById("list-content-container" + thisListID).className = "list-content-container";
+      }, 450);
+    } else {
+      document.getElementById("list-content-container" + thisListID).className = "list-content-container-close";
+      document.getElementById("list-heading-arrow" + thisListID).className = "list-heading-arrow-down-ani";
+      this.ListService.listOfLists[listIndex].isShowListOptionsActive = false;
+      this.ListService.listOfLists[listIndex].isShowListColourOptionsActive = false;
+      this.ListService.listOfLists[listIndex].isListRenameActive = false;
+      this.ListService.listOfLists[listIndex].isDeleteListOptionsActive = false;
+      this.ListService.listOfLists[listIndex].isAddListItemsActive = false;
+      setTimeout(() => {
+        document.getElementById("list-heading-arrow" + thisListID).className = "list-heading-arrow-down";
+        this.ListService.listOfLists[listIndex].isShowListActive = false;
+      }, 450);
+    }
+  }
+
+  showHideListOptions(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    console.log("showhideitems clicked")
+    if (this.ListService.listOfLists[listIndex].isShowListOptionsActive === false) {
+      this.ListService.listOfLists[listIndex].isShowListOptionsActive = true;
+      document.getElementById("options-gear" + thisListID).className = "list-heading-gear-open";
+      setTimeout(() => {
+        document.getElementById("options-gear" + thisListID).className = "list-heading-gear";
+      }, 510);
+    } else {
+      document.getElementById("options-gear" + thisListID).className = "list-heading-gear-close";
+      document.getElementById("list-options-container" + thisListID).className = "list-options-container-close";
+      if (this.ListService.listOfLists[listIndex].isShowListColourOptionsActive === true) {
+        document.getElementById("list-colour-options-container" + thisListID).className = "list-options-container-close";
+      }
+      setTimeout(() => {
+        this.ListService.listOfLists[listIndex].isShowListOptionsActive = false;
+        this.ListService.listOfLists[listIndex].isShowListColourOptionsActive = false;
+        this.ListService.listOfLists[listIndex].isListRenameActive = false;
+        this.ListService.listOfLists[listIndex].isDeleteListOptionsActive = false;
+        this.ListService.listOfLists[listIndex].isAddListItemsActive = false;
+      }, 450);
+      setTimeout(() => {
+        document.getElementById("options-gear" + thisListID).className = "list-heading-gear";
+      }, 500);
+    }
+  }
+
+  showHideListColourOptions(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    if (this.ListService.listOfLists[listIndex].isShowListColourOptionsActive === false) {
+      this.ListService.listOfLists[listIndex].isShowListColourOptionsActive = true;
+    } else {
+      document.getElementById("list-colour-options-container" + thisListID).className = "list-options-container-close";
+      setTimeout(() => {
+        this.ListService.listOfLists[listIndex].isShowListColourOptionsActive = false;
+      }, 450);
+    }
+  }
+
+  applyListColourTheme(thisListID, colour) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    this.ListService.listOfLists[listIndex].ListColour = colour
+  }
+
+  showRenameListOption(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    if (this.ListService.listOfLists[listIndex].isListRenameActive === false) {
+
+      this.ListService.listOfLists[listIndex].isListRenameActive = true;
+      console.log(thisListID);
+      setTimeout(() => {
+        (<HTMLInputElement>document.getElementById("list-heading-text" + thisListID)).value = this.ListService.listOfLists[listIndex].ListTitle;
+        (<HTMLInputElement>document.getElementById("list-heading-text" + thisListID)).focus();
+      }, 0);
+    } else {
+      this.ListService.listOfLists[listIndex].isListRenameActive = false;
+    }
+  }
+
+  submitNewListTitle(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    this.ListService.listOfLists[listIndex].isListRenameActive = false;
+    this.ListService.listOfLists[listIndex].ListTitle = (<HTMLInputElement>document.getElementById("list-heading-text" + thisListID)).value
+  }
+
+  showDeleteListOptions(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    if (this.ListService.listOfLists[listIndex].isDeleteListOptionsActive === false) {
+      this.ListService.listOfLists[listIndex].isDeleteListOptionsActive = true;
+    } else {
+      this.ListService.listOfLists[listIndex].isDeleteListOptionsActive = false;
+    }
+  }
+
+  deleteList(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    this.ListService.deleteThisList(listIndex);
+  }
+
+  activateAddListItems(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    console.log("activateAddListItems clicked")
+    if (this.ListService.listOfLists[listIndex].isAddListItemsActive === false) {
+      this.ListService.listOfLists[listIndex].isAddListItemsActive = true;
+      setTimeout(() => {
+        (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).focus();
+      }, 40)
+    } else {
+      this.ListService.listOfLists[listIndex].isAddListItemsActive = false;
+    }
+  }
+
+  stopAddListItems(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    console.log("stopAddListItems clicked")
+    this.ListService.listOfLists[listIndex].isAddListItemsActive = false;
+  }
+
+    addNewListItem(thisListID) {
+
+      
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+
+      if ((<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value === '') {
+        console.log("no text detected")
+
+      } else {
+        // create a temporary array of available ID's and select the first available ID
+        let newIDsAvailable: number[] = [];
+        for (let i = 1; i < (this.ListService.listOfLists[listIndex].List.length + 2); i++) {
+          if (this.ListService.listOfLists[listIndex].List.find((ListItem) => ListItem.ListItemID === i)) {
+            //do nothing
+            console.log("the id " + i + " already exists and was not added")
+          } else {
+            newIDsAvailable.push(i)
+            console.log("the available id " + i + " was added")
+          }
+        }
+        let newListItemID: number = newIDsAvailable[0];
+        // add the list item using that new ID and text from the input field
+        let newListItemText = (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value
+        this.ListService.listOfLists[listIndex].List.push(new ListItem(newListItemID, (newListItemText)));
+        this.ListService.listOfLists[listIndex].List.forEach(listitem => {
+          console.log(listitem)
+        });
+        (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value = '';
+        (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).focus();
+      }
+    }
+
+  setInputBorderColour(thisListID) {
+
+    // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+    document.getElementById("inputfield" + thisListID).focus();
+    (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).style.borderColor = this.ListService.listOfLists[listIndex].ListColour;
+  }
+
+ 
+    checkThisListItem(thisListID, thisListItemID) {
+
+          // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+      console.log("checkThisListItem clicked")
+      this.ListService.listOfLists[listIndex].List.forEach(_listitem => {
+        if (_listitem.ListItemID === thisListItemID) {
+          if (_listitem.isChecked === false) {
+            _listitem.isChecked = true;
+          } else {
+            _listitem.isChecked = false;
+          }
+        }
+      })
+    }
+
+    deleteThisListItem(thisListID, thisListItemID) {
+
+          // obtain the List Item Index that matches this List Item ID
+    let listIndex = this.returnThisListIndex(thisListID)
+
+      let listItemIndexToRemove = this.ListService.listOfLists[listIndex].List.findIndex((ListItem) => ListItem.ListItemID === thisListItemID)
+      this.ListService.listOfLists[listIndex].List.splice(listItemIndexToRemove, 1);
+    }
+
+
+
+
+
+
+
+
 
 }
