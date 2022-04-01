@@ -15,7 +15,7 @@ I gave myself the following criteria:
 
 #### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
 
-![Thumbnail](/thumbnail.png)
+![Thumbnail](/thumbnail.jpg)
 
 ### *** THIS IS A WORK IN PROGRESS ***
 
