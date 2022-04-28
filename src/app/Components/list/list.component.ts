@@ -3,6 +3,15 @@ import { HostListener } from '@angular/core';
 import { ListService } from 'src/app/Services/list.service';
 import { List } from 'src/app/Classes/List';
 import { ListItem } from '../../Classes/ListItem';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ListItemRequest } from '../../models/ListItemRequestModel';
+import { DeleteListRequest } from '../../models/DeleteListRequestModel';
+import { ListRequest } from '../../models/ListRequestModel';
+import { CreateListItemRequest } from '../../models/CreateListItemRequestModel';
+import { ListItemfromDB } from '../../Classes/ListItemfromDB';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -11,7 +20,7 @@ import { ListItem } from '../../Classes/ListItem';
 })
 export class ListComponent implements OnInit {
 
-  constructor(public ListService: ListService) { }
+  constructor(public ListService: ListService, private router: Router, private httpClient: HttpClient, private UserService: UserService) { }
 
   // @Input() List: List;
 
@@ -104,7 +113,29 @@ export class ListComponent implements OnInit {
     // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
 
-    this.ListService.listOfLists[listIndex].ListColour = colour
+    // ======= API request ======== \\
+
+    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListColour",
+      {
+        UserID: this.UserService.userID,
+        ListID: thisListID,
+        ListTitle: 'notused',
+        ListColour: colour
+      } as ListRequest);
+    request.subscribe(() => {
+      // only if api request successful.
+      this.ListService.listOfLists[listIndex].ListColour = colour
+    },
+      error => {
+        console.error(error);
+        alert("The API has thrown an error while attempting to update the list colour. \n"
+          + "please try again.")
+      }
+    );
+
+    // this.apistatus.loading = true;
+    //   this.ApistatusService.loaded = false;
+
   }
 
   showRenameListOption(thisListID) {
@@ -129,9 +160,34 @@ export class ListComponent implements OnInit {
 
     // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
+    let newlisttitle = (<HTMLInputElement>document.getElementById("list-heading-text" + thisListID)).value
 
-    this.ListService.listOfLists[listIndex].isListRenameActive = false;
-    this.ListService.listOfLists[listIndex].ListTitle = (<HTMLInputElement>document.getElementById("list-heading-text" + thisListID)).value
+    // ======= API request ======== \\
+
+    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListTitle",
+      {
+        UserID: this.UserService.userID,
+        ListID: thisListID,
+        ListTitle: newlisttitle,
+        ListColour: 'notused'
+      } as ListRequest);
+    request.subscribe(() => {
+      // only if api request successful.
+      this.ListService.listOfLists[listIndex].ListTitle = newlisttitle
+      this.ListService.listOfLists[listIndex].isListRenameActive = false;
+    },
+      error => {
+        console.error(error);
+        alert("The API has thrown an error while attempting to update the list title. \n"
+          + "please try again.")
+      }
+    );
+
+    // this.apistatus.loading = true;
+    //   this.ApistatusService.loaded = false;
+
+
+
   }
 
   showDeleteListOptions(thisListID) {
@@ -151,7 +207,7 @@ export class ListComponent implements OnInit {
     // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
 
-    this.ListService.deleteThisList(listIndex);
+    this.ListService.deleteThisList(thisListID, listIndex);
   }
 
   activateAddListItems(thisListID) {
@@ -179,39 +235,57 @@ export class ListComponent implements OnInit {
     this.ListService.listOfLists[listIndex].isAddListItemsActive = false;
   }
 
-    addNewListItem(thisListID) {
+  addNewListItem(thisListID) {
 
-      
     // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
 
+    if ((<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value === '') {
+      console.log("no text detected")
 
-      if ((<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value === '') {
-        console.log("no text detected")
-
-      } else {
-        // create a temporary array of available ID's and select the first available ID
-        let newIDsAvailable: number[] = [];
-        for (let i = 1; i < (this.ListService.listOfLists[listIndex].List.length + 2); i++) {
-          if (this.ListService.listOfLists[listIndex].List.find((ListItem) => ListItem.ListItemID === i)) {
-            //do nothing
-            console.log("the id " + i + " already exists and was not added")
-          } else {
-            newIDsAvailable.push(i)
-            console.log("the available id " + i + " was added")
-          }
+    } else {
+      // create a temporary array of available ID's and select the first available ID
+      let newIDsAvailable: number[] = [];
+      for (let i = 1; i < (this.ListService.listOfLists[listIndex].List.length + 2); i++) {
+        if (this.ListService.listOfLists[listIndex].List.find((ListItem) => ListItem.ListItemID === i)) {
+          //do nothing
+          console.log("the id " + i + " already exists and was not added")
+        } else {
+          newIDsAvailable.push(i)
+          console.log("the available id " + i + " was added")
         }
-        let newListItemID: number = newIDsAvailable[0];
-        // add the list item using that new ID and text from the input field
-        let newListItemText = (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value
+      }
+      let newListItemID: number = newIDsAvailable[0];
+      // add the list item using that new ID and text from the input field
+      let newListItemText = (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value
+
+      // ======= API request ======== \\
+
+      let request = this.httpClient.post<ListItemRequest>("https://localhost:5001/DoItAllList/PostListItemToDB",
+        {
+          UserID: this.UserService.userID,
+          ListID: thisListID,
+          ListItemID: newListItemID,
+          Text: newListItemText
+        } as ListItemRequest);
+      request.subscribe(() => {
+        // add the new List using that new ID, only if api request successful.
         this.ListService.listOfLists[listIndex].List.push(new ListItem(newListItemID, (newListItemText)));
         this.ListService.listOfLists[listIndex].List.forEach(listitem => {
           console.log(listitem)
         });
         (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value = '';
         (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).focus();
-      }
+      },
+        error => {
+          console.error(error);
+          alert("The API has thrown an error while attempting to create the list item \n"
+            + "please try again.")
+        }
+      );
+
     }
+  }
 
   setInputBorderColour(thisListID) {
 
@@ -222,32 +296,55 @@ export class ListComponent implements OnInit {
     (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).style.borderColor = this.ListService.listOfLists[listIndex].ListColour;
   }
 
- 
-    checkThisListItem(thisListID, thisListItemID) {
 
-          // obtain the List Item Index that matches this List Item ID
+  checkThisListItem(thisListID, thisListItemID) {
+
+    // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
 
-      console.log("checkThisListItem clicked")
-      this.ListService.listOfLists[listIndex].List.forEach(_listitem => {
-        if (_listitem.ListItemID === thisListItemID) {
-          if (_listitem.isChecked === false) {
-            _listitem.isChecked = true;
-          } else {
-            _listitem.isChecked = false;
-          }
+    console.log("checkThisListItem clicked")
+    this.ListService.listOfLists[listIndex].List.forEach(_listitem => {
+      if (_listitem.ListItemID === thisListItemID) {
+        if (_listitem.isChecked === false) {
+          _listitem.isChecked = true;
+        } else {
+          _listitem.isChecked = false;
         }
-      })
-    }
+      }
+    })
+  }
 
-    deleteThisListItem(thisListID, thisListItemID) {
+  deleteThisListItem(thisListID, thisListItemID) {
 
-          // obtain the List Item Index that matches this List Item ID
+    // obtain the List Item Index that matches this List Item ID
     let listIndex = this.returnThisListIndex(thisListID)
 
-      let listItemIndexToRemove = this.ListService.listOfLists[listIndex].List.findIndex((ListItem) => ListItem.ListItemID === thisListItemID)
+    let listItemIndexToRemove = this.ListService.listOfLists[listIndex].List.findIndex((ListItem) => ListItem.ListItemID === thisListItemID)
+
+    // ======= API request ======== \\
+
+    console.log(this.UserService.userID)
+    console.log(thisListID)
+    console.log(thisListItemID)
+
+    let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/DeleteListItemFromDB",
+      {
+        UserID: this.UserService.userID,
+        ListID: thisListID,
+        ListItemID: thisListItemID
+      } as ListItemRequest);
+    request.subscribe(() => {
+      // if successful, delete the list item from local list too.
       this.ListService.listOfLists[listIndex].List.splice(listItemIndexToRemove, 1);
-    }
+    },
+      error => {
+        console.error(error);
+        alert("The API has thrown an error while attempting to delete the list item \n"
+          + "please try again.")
+      }
+    );
+
+  }
 
 
 

@@ -23,33 +23,27 @@
   flex-direction: row;
   justify-content: space-between;
   padding-left: 5%;
-  height: 8vw;
+  height: 12vw;
   max-height: 70px;
   align-items: center;
 }
 
 .list-heading-text-container {
   display: flex;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
-  /* align-content: center; */
   text-align: center;
-  height: 7vw;
-  max-height: 60px;
-  /* background-color: red; */
-  width: 51vw;
+  /* height: 12vw;
+  max-height: 60px; */
+  width: 200vw;
   max-width: 435px;
-  /* background-color: aqua; */
 }
 
 .list-heading-text,
 .list-heading-input {
   font-family: "Kalam", cursive;
-  /* font-family: Arial, Helvetica, sans-serif; */
   font-weight: 600;
-  font-size: clamp(0.8rem, 4vw, 2rem);
+  font-size: clamp(0.8rem, 6vw, 2.3rem);
   color: var(--clr-dark-grey);
-  padding-top: 2%;
+  /* padding-top: 2%; */
   user-select: none;
 }
 
@@ -151,8 +145,8 @@
   display: flex;
   position: relative;
   width: 85%;
-  height: 6vw;
-  max-height: 50px;
+  height: 12vw;
+  max-height: 70px;
   flex-direction: row;
   padding-left: 7.5%;
   padding-right: 7.5%;
@@ -165,8 +159,7 @@
   animation-iteration-count: 1;
 }
 
-.list-options-container-open,
-.list-options-container-open button {
+.list-options-container-open {
   animation-name: list-options-container-open-ani;
   animation-duration: 500ms;
   animation-iteration-count: 1;
@@ -174,24 +167,52 @@
 
 @keyframes list-options-container-open-ani {
   0% {
-    margin-top: 1px;
-    font-size: 1px;
-    opacity: 1%;
+    margin-top: -1px;
     height: 1px;
     max-height: 1px;
   }
 }
 
-.list-options-container-close,
-.list-options-container-close button {
+.list-options-container-open button {
+  animation-name: list-options-container-button-open-ani;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes list-options-container-button-open-ani {
+  0% {
+    opacity: 1%;
+    height: 1px;
+    max-height: 1px;
+  }
+  25% {
+    opacity: 1%;
+  }
+}
+
+.list-options-container-close {
   animation-name: list-options-container-close-ani;
   animation-duration: 500ms;
   animation-iteration-count: 1;}
 
 @keyframes list-options-container-close-ani {
   100% {
-    margin-top: 1px;
-    font-size: 1px;
+    margin-top: -1px;
+    height: 1px;
+    max-height: 1px;
+  }
+}
+
+.list-options-container-close button {
+  animation-name: list-options-container-button-close-ani;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;}
+
+@keyframes list-options-container-button-close-ani {
+  50% {
+    opacity: 1%;
+  }
+  100% {
     opacity: 1%;
     height: 1px;
     max-height: 1px;
@@ -201,14 +222,14 @@
 .options-button {
   font-family: "ABeeZee", sans-serif;
   color: var(--clr-white);
-  padding-left: 2.5%;
-  padding-right: 2.5%;
+  padding-left: 4.5%;
+  padding-right: 4.5%;
   background-color: var(--clr-dark-grey);
-  font-size: clamp(0.3rem, 2vw, 0.8rem);
+  font-size: clamp(0.3rem, 3vw, 1.1rem);
   margin-right: 0.5%;
-  height: 3.5vw;
-  max-height: 30px;
-  border-radius: 0.5vh;
+  height: 7vw;
+  max-height: 45px;
+  border-radius: 1.5vh;
 }
 
 .deleteListQueryText{
@@ -242,7 +263,7 @@ font-weight: 700;
 @keyframes list-content-container-open-ani {
   0% {
     margin-top: 1px;
-    font-size: 1px;
+    /* font-size: 1px; */
     opacity: 1%;
     height: 1px;
     max-height: 1px;
@@ -263,7 +284,7 @@ font-weight: 700;
 @keyframes list-content-container-close-ani {
   100% {
     margin-top: 1px;
-    font-size: 1px;
+    /* font-size: 1px; */
     opacity: 1%;
     height: 1px;
     max-height: 1px;
@@ -272,7 +293,7 @@ font-weight: 700;
 
 .list-item-row {
   margin-bottom: 2.5%;
-  height: 7vw;
+  height: 12vw;
   max-height: 60px;
 }
 
@@ -280,32 +301,34 @@ font-weight: 700;
   display: flex;
   flex-direction: row;
   position: relative;
-  height: 7vw;
+  height: 12vw;
   max-height: 60px;
   background-color: var(--clr-lightest-grey);
+  user-select: none;
+  cursor: pointer;
 }
 
 .list-item-accent {
-  height: 7vw;
+  height: 12vw;
   max-height: 60px;
-  width: 10px;
+  width: 3vw;
+  max-width: 15px;
   position: absolute;
   z-index: 2;
 }
 
 .list-item-text-container {
   width: 86%;
-  margin: 1.5% 0% 0% 5%;
-  cursor: pointer;
+  margin: 1.5% 0% 0% 6.5%;
+
 }
 
 .list-item-text,
 .list-item-text-checked {
   font-family: "Kalam", cursive;
   font-weight: 100;
-  font-size: clamp(0.5rem, 3.5vw, 1.8rem);
+  font-size: clamp(0.5rem, 6vw, 2rem);
   color: var(--clr-dark-grey);
-  user-select: none;
 }
 
 .list-item-text-checked {
@@ -321,7 +344,7 @@ font-weight: 700;
   justify-content: center;
   margin-top: 5%;
   margin-bottom: 7.5%;
-  height: 7vw;
+  height: 12vw;
   max-height: 60px;
 }
 
@@ -378,7 +401,7 @@ button {
   color: var(--clr-white);
   background-color: var(--clr-dark-grey);
   z-index: 2;
-  height: 7vw;
+  height: 12vw;
   max-height: 60px;
   cursor: pointer;
 }
@@ -387,8 +410,8 @@ button {
   font-family: "ABeeZee", sans-serif;
   font-weight: bolder;
   border-radius: 100vw;
-  font-size: clamp(0.5rem, 10vw, 5.5rem);
-  height: 8vw;
+  font-size: clamp(0.5rem, 15vw, 6rem);
+  height: 12vw;
   max-height: 65px;
   min-height: 15px;
 }
@@ -418,27 +441,26 @@ button {
   background-color: var(--clr-lightest-grey);
   font-family: "ABeeZee", sans-serif;
   font-weight: bolder;
-  font-size: clamp(0.3rem, 7vw, 4rem);
+  font-size: clamp(0.3rem, 12vw, 4rem);
   color: var(--clr-white);
   background-color: var(--clr-red);
   z-index: 2;
   padding-bottom: 2%;
-  padding-right: 3%;
-  padding-left: 3%;
-  /* width: 100%; */
+  padding-right: 3.5%;
+  padding-left: 3.5%;
   color: rgb(148, 9, 9);
 }
 
 .colour-theme-button{
-  height: 4vw;
-  max-height: 30px;
+  height: 7vw;
+  max-height: 40px;
   min-height: 10px;
-  width: 4vw;
+  width: 7vw;
   min-width: 10px;
-  max-width: 30px;
+  max-width: 40px;
   border-style: solid;
-  border-radius: clamp(0.1vw, 1vw, 1vw);
-  border-width: clamp(0.2vw, 0.5vw, 1vw);
+  border-radius: clamp(0.1vw, 2vw, 12.5px);
+  border-width: clamp(0.2vw, 1.2vw, 7.5px);
   border-color: var(--clr-dark-grey);
   margin-bottom: 1vh;
 }

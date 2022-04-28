@@ -1,10 +1,10 @@
 .header-container {
-  width: 80vw;
-  max-width: 500px;
+  width: 92vw;
   min-width: 150px;
   border-style: none;
-  /* padding-top: 5%; */
-  /* padding-bottom: 5%; */
+  padding-right: 3%;
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
 }
 
 .header-button-row {
@@ -19,29 +19,25 @@
   max-height: 50px;
 }
 
-.button {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+button {
+  display: flex;    
   align-items: center;
   border-style: none;
-  border-radius: 15px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  font-size: clamp(0.3rem, 3vw, 1.5rem);
-  color: rgb(240, 240, 240);
-  padding-left: 3%;
-  padding-right: 3%;
-  background-color: var(--clr-dark-grey);
-  z-index: 2;
-  height: 5vw;
-  max-height: 50px;
+  color: var(--clr-dark-grey);
+  background-color: var(--clr-lightest-grey);
+  font-family: "ABeeZee", sans-serif;
+  font-weight: bolder;
+  border-radius: 100vw;
+  font-size: clamp(0.5rem, 5vw, 2.5rem);
+  height: 4vw;
+  max-height: 65px;
+  min-height: 15px;
+  cursor: pointer;
 }
 
 .user-text {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-  font-size: clamp(0.3rem, 3vw, 1.5rem);
-  color:  var(--clr-dark-grey);
+  font-size: clamp(0.3rem, 4vw, 1.5rem);
+  color: var(--clr-lightest-grey);
 }

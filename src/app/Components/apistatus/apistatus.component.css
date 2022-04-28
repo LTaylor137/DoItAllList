@@ -1,0 +1,27 @@
+
+.apiStatusLoading {
+    background-color: aqua;
+    height: 10vw;
+    width: 10vw;
+    max-height: 75px;
+    max-width: 75px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    user-select: none;
+    z-index: -1;
+  }
+
+  .apiStatusLoaded {
+    background-color: lime;
+    height: 10vw;
+    width: 10vw;
+    max-height: 75px;
+    max-width: 75px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    user-select: none;
+    z-index: 10;
+  }
+  

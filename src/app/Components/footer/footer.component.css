@@ -21,8 +21,8 @@ button {
     display: flex;    
     align-items: center;
     border-style: none;
-    color: var(--clr-light-grey);
-    background-color: var(--clr-dark-grey);
+    color: var(--clr-dark-grey);
+    background-color: var(--clr-lightest-grey);
     font-family: "ABeeZee", sans-serif;
     font-weight: bolder;
     border-radius: 100vw;
