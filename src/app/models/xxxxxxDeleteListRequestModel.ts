@@ -1,5 +1,5 @@
 
-export interface DeleteListRequest {
+export interface xxxxxxxDeleteListRequest {
 
     UserID: number;
     ListID: number;

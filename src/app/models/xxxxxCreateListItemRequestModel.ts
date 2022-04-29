@@ -1,5 +1,5 @@
 
-export interface CreateListItemRequest {
+export interface xxxxxCreateListItemRequest {
 
     UserID: number;
     ListID: number;

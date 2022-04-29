@@ -10,34 +10,34 @@
 .header-button-row {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between;
   align-items: center;
-  /* margin-left: 5%; */
-  margin-right: 2.5%;
   padding-bottom: 1%;
   height: 5vw;
   max-height: 50px;
 }
 
-button {
-  display: flex;    
+.logout-button,
+.username-button {
+  display: flex;
   align-items: center;
   border-style: none;
   color: var(--clr-dark-grey);
   background-color: var(--clr-lightest-grey);
   font-family: "ABeeZee", sans-serif;
-  font-weight: bolder;
-  border-radius: 100vw;
-  font-size: clamp(0.5rem, 5vw, 2.5rem);
-  height: 4vw;
-  max-height: 65px;
+  font-weight: 1000;
+  border-radius: 2vw;
+  font-size: clamp(0.5rem, 4vw, 1.5rem);
+  height: 7vw;
+  max-height: 50px;
+  padding: 2vw;
+  margin-left: 2vw;
   min-height: 15px;
   cursor: pointer;
+  font-weight: 700;
 }
 
-.user-text {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  font-size: clamp(0.3rem, 4vw, 1.5rem);
+.username-button {
   color: var(--clr-lightest-grey);
+  background-color: var(--clr-dark-grey);
+  font-weight: 400;
 }

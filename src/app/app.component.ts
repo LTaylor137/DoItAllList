@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ListService } from './Services/list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,15 @@ import { ListService } from './Services/list.service';
 export class AppComponent {
   title = 'DoItAllList';
 
-  constructor(public ListService: ListService) { }
+  constructor(public router: Router, public ListService: ListService) { }
 
 ngOnInit(): void {
-  console.log("initt1")
-
-  this.ListService.populateList()
+  console.log(" -- App Initialised -- ")
+  // this.ListService.populateList() moved to list.component.ts
   this.ListService.populateColourThemes()
-  this.ListService.changeListClass()
-
+  // this.ListService.changeListClass() moved to list.component.ts
 }
+
+
 
 }

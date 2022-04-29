@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ListComponent } from './Components/list/list.component';
+import { UserselectComponent } from './Components/userselect/userselect.component';
 
-const routes: Routes = [];
+const routes: Routes = [
 
+  { path: "userselect", component: UserselectComponent },
+  { path: "showlist", component: ListComponent },
+  { path: "**", redirectTo: "showlist" }
+
+];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

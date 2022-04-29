@@ -1,7 +1,7 @@
 
 export interface ListRequest {
 
-    UserID: number;
+    UserID: any;
     ListID: number;
     ListTitle: string;
     ListColour: string;

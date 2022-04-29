@@ -5,13 +5,13 @@ export class ListItem {
     isChecked: boolean;
 
     constructor(
-        _ListItemID: number, _Text: string
+        _ListItemID: number, _Text: string, _isChecked: boolean
         ) 
          
          {
          this.ListItemID = _ListItemID;
          this.Text = _Text;
-         this.isChecked = false;
+         this.isChecked = _isChecked;
          }
 
 }

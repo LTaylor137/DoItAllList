@@ -140,6 +140,37 @@
   }
 }
 
+.list-heading-gear-show,
+.list-heading-gear-hide {
+  height: 50%;
+  margin-right: 5%;
+  animation-name: list-heading-gear-show-ani;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+}
+
+.list-heading-gear-hide {
+  animation-name: list-heading-gear-hide-ani;
+}
+
+@keyframes list-heading-gear-show-ani {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes list-heading-gear-hide-ani {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
 .list-options-container-open,
 .list-options-container-close {
   display: flex;
@@ -219,7 +250,8 @@
   }
 }
 
-.options-button {
+.options-button,
+.options-button-delete {
   font-family: "ABeeZee", sans-serif;
   color: var(--clr-white);
   padding-left: 4.5%;
@@ -232,11 +264,19 @@
   border-radius: 1.5vh;
 }
 
+.options-button-delete {
+  color: var(--clr-white);
+  background-color: rgb(140, 0, 0);
+}
+
 .deleteListQueryText{
-font-family: "ABeeZee", sans-serif;
-color: var(--clr-white);
-font-size: clamp(0.3rem, 2vw, 0.8rem);
-font-weight: 700;
+  font-family: "ABeeZee", sans-serif;
+  color: var(--clr-white);
+  font-weight: 700;
+  line-height: 22.5px;
+  padding-left: 2vw;
+  padding-right: 1vw;
+  text-align: center;
 }
 
 /* ------------------------------------------- list items ------------------------------------------- */
@@ -304,6 +344,7 @@ font-weight: 700;
   height: 12vw;
   max-height: 60px;
   background-color: var(--clr-lightest-grey);
+  white-space: nowrap;
   user-select: none;
   cursor: pointer;
 }
@@ -359,10 +400,11 @@ font-weight: 700;
   border-style: none;
   width: 100vw;
   min-width: 95px;
-  font-size: clamp(0.3rem, 3vw, 1.5rem);
-  height: 6.7vw;
-  max-height: 58px;
-  padding-left: 5%;
+  font-size: clamp(0.3rem, 4vw, 1.5rem);
+  height: 12vw;
+  max-height: 60px;
+  padding: 0% 0% 0% 6.5%;
+  /* padding-left: 5%; */
   margin-right: 2.5%;
   background-color: var(--clr-lightest-grey);
 }
@@ -371,10 +413,10 @@ font-weight: 700;
   border-style: solid;
   border-width: 3px;
   outline: none !important;
-  height: 6vw;
-  max-height: 52px;
-  padding-left: 4.5%;
-  margin-right: 2%;
+  height: 12vw;
+  max-height: 54px;
+  padding: 0% 0% 0% 5.7%;
+  margin-right: 2.5%;
 }
 
 /* ------------------------------------------- buttons ------------------------------------------- */
@@ -406,13 +448,13 @@ button {
   cursor: pointer;
 }
 
-.add-items-button {
+.add-list-items-button {
   font-family: "ABeeZee", sans-serif;
   font-weight: bolder;
   border-radius: 100vw;
-  font-size: clamp(0.5rem, 15vw, 6rem);
+  font-size: clamp(1rem, 16vw, 6.5rem);
   height: 12vw;
-  max-height: 65px;
+  max-height: 70px;
   min-height: 15px;
 }
 
@@ -427,8 +469,8 @@ button {
   display: flex;
   /* flex-direction: row-reverse; */
   border-radius: 100vw;
-  font-size: clamp(0.5rem, 6vw, 3.5rem);
-  height: 8vw;
+  font-size: clamp(0.5rem, 12vw, 3.5rem);
+  height: 12vw;
   max-height: 65px;
   min-height: 15px;
   background-color: rgb(109, 190, 102);

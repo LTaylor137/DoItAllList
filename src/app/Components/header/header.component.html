@@ -2,8 +2,8 @@
 <div class="header-container">
 
     <div class="header-button-row">
-        <a class="user-text">Welcome, Lachlan</a>
-        <!-- <button (click)="this.ListService.saveCurrentLists()">s</button> -->
+        <button *ngIf="this.isLogoutOptionShowing === true" class="logout-button" (click)="navigateToUserSelect()">log out</button>
+        <button class="username-button" (click)="showHideLogoutOption()">Welcome, {{this.UserService.username}}</button>
     </div>
 
 </div>

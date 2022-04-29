@@ -1,0 +1,60 @@
+<div class="user-select-container">
+
+    <!-- user heading -->
+    <div class="user-select-heading-container" style="background-color: {{this.randomColour}}">
+        <a class="user-select-heading-text">User Select</a>
+    </div>
+
+    <!-- instruction text -->
+    <div class="instruction-text-container">
+        <a class="instruction-text">This section is a work in progress. <br>
+            Passwords / Logins are not implemented. <br>
+            New users can be added but not removed.<br>
+            Click on a user to see their lists.</a>
+    </div>
+
+    <!-- user items -->
+    <div *ngFor="let thisUser of this.UserService.UsersFromDB" class="user-select-content-container">
+
+        <div class="user-select-item-row">
+            <div (click)="logInAsUser(thisUser.UserID, thisUser.Username)" class="user-select-item-container">
+                <div class="user-select-item-accent" style="background-color: {{this.randomColour}}"> </div>
+                <div class="user-select-item-text-container">
+                    <a class="user-select-item-text">{{thisUser.Username}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- input new user -->
+    <div *ngIf="this.isAddUserActive === true" class="user-select-content-container">
+        <div class="input-user-container">
+            <div class="user-select-item-accent" style="background-color: {{this.randomColour}}">
+            </div>
+            <input class="input-field" type="text" id="adduserinputfield" name="add new user"
+                placeholder="add new user" (keyup.enter)="addNewUser()"
+                style="border-color: {{this.randomColour}}">
+            <button class="add-button" (click)="addNewUser()" style="background-color: {{this.randomColour}}"> add
+            </button>
+        </div>
+    </div>
+
+    <!-- add new user button -->
+    <div *ngIf="this.isAddUserActive === false" class="add-user-row">
+        <button class="add-user-button" (click)="activateAddUser()"
+            style="background-color: {{this.randomColour}}">+</button>
+    </div>
+    <div *ngIf="this.isAddUserActive === true" class="add-user-row">
+        <button class="cancel-button" (click)="stopAddUser()">
+            <!-- <a class="material-icons"> -->
+               x
+            <!-- </a> -->
+        </button>
+    </div>
+
+
+    <!-- footer -->
+    <div class="user-select-footer">
+    </div>
+
+</div>

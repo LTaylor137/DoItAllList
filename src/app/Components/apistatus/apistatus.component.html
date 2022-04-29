@@ -1,4 +1,10 @@
-
-<div *ngIf="this.ApistatusService.loading === true" class="apiStatusLoading"></div>
-<div *ngIf="this.ApistatusService.loaded === true" class="apiStatusLoaded"></div>
-
+<div *ngIf="this.ApistatusService.loading === true" class="apiStatusLoading">
+    <a class="material-icons">
+        backup
+    </a>
+</div>
+<div *ngIf="this.ApistatusService.loaded === true" class="apiStatusLoaded">
+    <a class="material-icons">
+        done
+    </a>
+</div>

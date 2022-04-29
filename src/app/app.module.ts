@@ -12,6 +12,7 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { ListComponent } from './Components/list/list.component';
 import { UserService } from './Services/user.service';
 import { ApistatusComponent } from './Components/apistatus/apistatus.component';
+import { UserselectComponent } from './Components/userselect/userselect.component';
 // import { ListItem } from './Classes/ListItem';
 
 
@@ -21,7 +22,8 @@ import { ApistatusComponent } from './Components/apistatus/apistatus.component';
     HeaderComponent,
     ListComponent,
     FooterComponent,
-    ApistatusComponent
+    ApistatusComponent,
+    UserselectComponent
   ],
   imports: [
     BrowserModule,

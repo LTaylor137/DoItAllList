@@ -21,7 +21,7 @@ export class ListItemfromDB {
         this.ListColour = _ListColour;
         this.ListItemID = _ListItemID;
         this.Text = _Text;
-        this.isChecked = false;
+        this.isChecked = _isChecked;
     }
 
 }

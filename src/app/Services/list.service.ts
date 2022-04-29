@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { List } from '../Classes/List';
 import { ListItem } from '../Classes/ListItem';
 import { ListItemRequest } from '../models/ListItemRequestModel';
-import { DeleteListRequest } from '../models/DeleteListRequestModel';
+// import { DeleteListRequest } from '../models/xxxxxxDeleteListRequestModel';
 import { ListRequest } from '../models/ListRequestModel';
 import { ListItemfromDB } from '../Classes/ListItemfromDB';
 import { UserService } from './user.service';
@@ -28,9 +28,6 @@ export class ListService {
 
   constructor(private router: Router, private httpClient: HttpClient, private UserService: UserService, private ApistatusService: ApistatusService) { }
 
-  ngOnInit(): void {
-  }
-
   populateList() {
 
     // ======= API request ======== \\
@@ -42,6 +39,8 @@ export class ListService {
 
     request.subscribe((response) => {
 
+      this.listItemsFromDB = [];
+      this.listOfLists = [];
       console.log(response)
 
       response.forEach(element => {
@@ -69,7 +68,7 @@ export class ListService {
           // push list items to existing list instead.
           this.listOfLists.forEach(ListItemElementA => {
             if (ListItemElementA.ListID === found.ListID) {
-              ListItemElementA.List.push(new ListItem(ListElement.ListItemID, ListElement.Text))
+              ListItemElementA.List.push(new ListItem(ListElement.ListItemID, ListElement.Text, ListElement.isChecked))
             }
           });
 
@@ -84,7 +83,7 @@ export class ListService {
               if (ListElement.Text === '') {
                 console.log("null value found.")
               } else {
-                ListItemElementB.List.push(new ListItem(ListElement.ListItemID, ListElement.Text))
+                ListItemElementB.List.push(new ListItem(ListElement.ListItemID, ListElement.Text, ListElement.isChecked))
               }
             }
           });
@@ -109,8 +108,119 @@ export class ListService {
       }
     );
 
+    this.changeListClass();
+
   }
 
+  populateColourThemes() {
+    this.listOfColourThemes.push(
+      "var(--clr-heading-green)",
+      "var(--clr-heading-teal)",
+      "var(--clr-heading-blue)",
+      "var(--clr-heading-purple)",
+      "var(--clr-heading-pink)",
+      "var(--clr-heading-red)",
+      "var(--clr-heading-orange)",
+      "var(--clr-heading-yellow)"
+    )
+  }
+
+  // a quick hack to change list container class to non-animated version on initial load.
+  // could not get list-content-container's class to change to .list-content-container-open at the same time 
+  // as it becoming true. so the class applied is .list-content-container-open instead.
+  // and it is changed to .list-content-container after initially loading.
+  changeListClass() {
+    setTimeout(() => {
+      this.listOfLists.forEach(List => {
+        document.getElementById("list-content-container" + List.ListID).className = "list-content-container";
+        console.log("List class of " + List.ListID + " updated")
+      }, 500);
+    });
+  }
+
+  createNewList() {
+
+    // create a temporary array of available ID's and select the first available ID
+    let newIDsAvailable: number[] = [];
+    for (let i = 1; i < (this.listOfLists.length + 2); i++) {
+      if (this.listOfLists.find((List) => List.ListID === i)) {
+        //do nothing
+        console.log("the id " + i + " already exists and was not added")
+      } else {
+        newIDsAvailable.push(i)
+        console.log("the available id " + i + " was added")
+      }
+    }
+    let newListID: number = newIDsAvailable[0];
+    // get a random colour
+    let randomColour: string = this.listOfColourThemes[Math.floor(Math.random() * this.listOfColourThemes.length)]
+
+    // ======= API request ======== \\
+
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
+
+    let request = this.httpClient.post<ListRequest>("https://localhost:5001/DoItAllList/CreateNewList",
+      {
+        UserID: this.UserService.userID,
+        ListID: newListID,
+        ListTitle: 'New List',
+        ListColour: randomColour
+      } as ListRequest);
+    request.subscribe(() => {
+      // add the new List using that new ID, only if api request successful.
+      this.listOfLists.push(new List(newListID, "New List", randomColour))
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
+    },
+      error => {
+        console.error(error);
+        alert("The API has thrown an error while attempting to create the new list. \n"
+          + "please try again.")
+      }
+    );
+  }
+
+  deleteThisList(thisListID, listIndex) {
+
+    // ======= API request ======== \\
+
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
+
+    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/DeleteListFromDB",
+      {
+        UserID: this.UserService.userID,
+        ListID: thisListID
+        // this.apistatus.loading = true;
+        //   this.ApistatusService.loaded = false;
+      } as ListRequest);
+    request.subscribe(() => {
+      console.log("deleting list at index = " + listIndex)
+      this.listOfLists.splice(listIndex, 1)
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
+    },
+      error => {
+        console.error(error);
+        alert("The API has thrown an error while attempting to delete the list \n"
+          + "please try again.")
+      }
+    );
+
+  }
+
+  
   // console.log(ListItem)
 
   // this.listOfLists.push(new List(1, "Shopping List", "var(--clr-heading-green)"))
@@ -171,98 +281,6 @@ export class ListService {
   //   }
   //   )
   // }
-
-  populateColourThemes() {
-    this.listOfColourThemes.push(
-      "var(--clr-heading-green)",
-      "var(--clr-heading-teal)",
-      "var(--clr-heading-blue)",
-      "var(--clr-heading-purple)",
-      "var(--clr-heading-pink)",
-      "var(--clr-heading-red)",
-      "var(--clr-heading-orange)",
-      "var(--clr-heading-yellow)"
-    )
-  }
-
-  // a quick hack to change list container style to non-animated version on initial load.
-  changeListClass() {
-    setTimeout(() => {
-      this.listOfLists.forEach(List => {
-        document.getElementById("list-content-container" + List.ListID).className = "list-content-container";
-        console.log(List.ListID + " updated")
-      }, 500);
-    });
-  }
-
-  createNewList() {
-
-    // create a temporary array of available ID's and select the first available ID
-    let newIDsAvailable: number[] = [];
-    for (let i = 1; i < (this.listOfLists.length + 2); i++) {
-      if (this.listOfLists.find((List) => List.ListID === i)) {
-        //do nothing
-        console.log("the id " + i + " already exists and was not added")
-      } else {
-        newIDsAvailable.push(i)
-        console.log("the available id " + i + " was added")
-      }
-    }
-    let newListID: number = newIDsAvailable[0];
-    // get a random colour
-    let randomColour: string = this.listOfColourThemes[Math.floor(Math.random() * this.listOfColourThemes.length)]
-
-    // ======= API request ======== \\
-
-    let request = this.httpClient.post<ListRequest>("https://localhost:5001/DoItAllList/CreateNewList",
-      {
-        UserID: this.UserService.userID,
-        ListID: newListID,
-        ListTitle: 'New List',
-        ListColour: randomColour
-      } as ListRequest);
-    request.subscribe(() => {
-      // add the new List using that new ID, only if api request successful.
-      this.listOfLists.push(new List(newListID, "New List", randomColour))
-    },
-      error => {
-        console.error(error);
-        alert("The API has thrown an error while attempting to create the new list. \n"
-          + "please try again.")
-      }
-    );
-
-    // this.apistatus.loading = true;
-    //   this.ApistatusService.loaded = false;
-  }
-
-
-
-  deleteThisList(thisListID, listIndex) {
-
-    // ======= API request ======== \\
-
-    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/DeleteListFromDB",
-      {
-        UserID: this.UserService.userID,
-        ListID: thisListID
-        // this.apistatus.loading = true;
-        //   this.ApistatusService.loaded = false;
-      } as ListRequest);
-    request.subscribe(() => {
-      console.log("deleting list at index = " + listIndex)
-      this.listOfLists.splice(listIndex, 1)
-      // this.apistatus.loading = false;
-      //   this.ApistatusService.loaded = true;
-    },
-      error => {
-        console.error(error);
-        alert("The API has thrown an error while attempting to delete the list \n"
-          + "please try again.")
-      }
-    );
-
-  }
 
 
 

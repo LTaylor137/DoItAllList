@@ -7,11 +7,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ListItemRequest } from '../../models/ListItemRequestModel';
-import { DeleteListRequest } from '../../models/DeleteListRequestModel';
+// import { DeleteListRequest } from '../../models/xxxxxxDeleteListRequestModel';
 import { ListRequest } from '../../models/ListRequestModel';
-import { CreateListItemRequest } from '../../models/CreateListItemRequestModel';
+// import { CreateListItemRequest } from '../../models/CreateListItemRequestModel';
 import { ListItemfromDB } from '../../Classes/ListItemfromDB';
 import { UserService } from '../../Services/user.service';
+import { ApistatusService } from 'src/app/Services/apistatus.service';
 
 @Component({
   selector: 'app-list',
@@ -20,12 +21,17 @@ import { UserService } from '../../Services/user.service';
 })
 export class ListComponent implements OnInit {
 
-  constructor(public ListService: ListService, private router: Router, private httpClient: HttpClient, private UserService: UserService) { }
+  constructor(public ListService: ListService, private router: Router, private httpClient: HttpClient, private UserService: UserService, public ApistatusService: ApistatusService) {
+  }
 
   // @Input() List: List;
 
-  ngOnInit(): void {
+  refresh(): void {
+    window.location.reload();
+  }
 
+  ngOnInit(): void {
+    this.ListService.populateList()
   }
 
   returnThisListIndex(thisListID) {
@@ -42,14 +48,15 @@ export class ListComponent implements OnInit {
     let listIndex = this.returnThisListIndex(thisListID)
 
     if (this.ListService.listOfLists[listIndex].isShowListActive === false) {
-
       this.ListService.listOfLists[listIndex].isShowListActive = true;
+
       setTimeout(() => {
         document.getElementById("list-content-container" + thisListID).className = "list-content-container";
       }, 450);
     } else {
       document.getElementById("list-content-container" + thisListID).className = "list-content-container-close";
       document.getElementById("list-heading-arrow" + thisListID).className = "list-heading-arrow-down-ani";
+      document.getElementById("options-gear" + thisListID).className = "list-heading-gear-hide";
       this.ListService.listOfLists[listIndex].isShowListOptionsActive = false;
       this.ListService.listOfLists[listIndex].isShowListColourOptionsActive = false;
       this.ListService.listOfLists[listIndex].isListRenameActive = false;
@@ -115,6 +122,9 @@ export class ListComponent implements OnInit {
 
     // ======= API request ======== \\
 
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
+
     let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListColour",
       {
         UserID: this.UserService.userID,
@@ -125,6 +135,13 @@ export class ListComponent implements OnInit {
     request.subscribe(() => {
       // only if api request successful.
       this.ListService.listOfLists[listIndex].ListColour = colour
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
     },
       error => {
         console.error(error);
@@ -132,10 +149,6 @@ export class ListComponent implements OnInit {
           + "please try again.")
       }
     );
-
-    // this.apistatus.loading = true;
-    //   this.ApistatusService.loaded = false;
-
   }
 
   showRenameListOption(thisListID) {
@@ -164,6 +177,9 @@ export class ListComponent implements OnInit {
 
     // ======= API request ======== \\
 
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
+
     let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListTitle",
       {
         UserID: this.UserService.userID,
@@ -175,6 +191,13 @@ export class ListComponent implements OnInit {
       // only if api request successful.
       this.ListService.listOfLists[listIndex].ListTitle = newlisttitle
       this.ListService.listOfLists[listIndex].isListRenameActive = false;
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
     },
       error => {
         console.error(error);
@@ -182,12 +205,6 @@ export class ListComponent implements OnInit {
           + "please try again.")
       }
     );
-
-    // this.apistatus.loading = true;
-    //   this.ApistatusService.loaded = false;
-
-
-
   }
 
   showDeleteListOptions(thisListID) {
@@ -261,6 +278,9 @@ export class ListComponent implements OnInit {
 
       // ======= API request ======== \\
 
+      this.ApistatusService.loading = true;
+      this.ApistatusService.loaded = false;
+
       let request = this.httpClient.post<ListItemRequest>("https://localhost:5001/DoItAllList/PostListItemToDB",
         {
           UserID: this.UserService.userID,
@@ -270,9 +290,16 @@ export class ListComponent implements OnInit {
         } as ListItemRequest);
       request.subscribe(() => {
         // add the new List using that new ID, only if api request successful.
-        this.ListService.listOfLists[listIndex].List.push(new ListItem(newListItemID, (newListItemText)));
+        this.ListService.listOfLists[listIndex].List.push(new ListItem(newListItemID, (newListItemText), false));
         this.ListService.listOfLists[listIndex].List.forEach(listitem => {
           console.log(listitem)
+
+          this.ApistatusService.loading = false;
+          this.ApistatusService.loaded = true;
+          setTimeout(() => {
+            this.ApistatusService.loaded = false;
+          }, 500);
+
         });
         (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).value = '';
         (<HTMLInputElement>document.getElementById("inputfield" + thisListID)).focus();
@@ -306,12 +333,86 @@ export class ListComponent implements OnInit {
     this.ListService.listOfLists[listIndex].List.forEach(_listitem => {
       if (_listitem.ListItemID === thisListItemID) {
         if (_listitem.isChecked === false) {
-          _listitem.isChecked = true;
+
+          // ======= API request ======== \\
+
+          this.ApistatusService.loading = true;
+          this.ApistatusService.loaded = false;
+
+          console.log(this.UserService.userID)
+          console.log(thisListID)
+          console.log(thisListItemID)
+
+          let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/UpdateListItemChecked",
+            {
+              UserID: this.UserService.userID,
+              ListID: thisListID,
+              ListItemID: thisListItemID,
+              isChecked: true
+            } as ListItemRequest);
+          request.subscribe(() => {
+            // if successful, delete the list item from local list too.
+            _listitem.isChecked = true;
+
+            this.ApistatusService.loading = false;
+            this.ApistatusService.loaded = true;
+            setTimeout(() => {
+              this.ApistatusService.loaded = false;
+            }, 500);
+
+          },
+            error => {
+              console.error(error);
+              alert("The API has thrown an error while attempting to update the list item to checked \n"
+                + "please try again.")
+            }
+          );
+
         } else {
-          _listitem.isChecked = false;
+
+          // ======= API request ======== \\
+
+          this.ApistatusService.loading = true;
+          this.ApistatusService.loaded = false;
+
+          console.log(this.UserService.userID)
+          console.log(thisListID)
+          console.log(thisListItemID)
+
+          let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/UpdateListItemChecked",
+            {
+              UserID: this.UserService.userID,
+              ListID: thisListID,
+              ListItemID: thisListItemID,
+              isChecked: false
+            } as ListItemRequest);
+          request.subscribe(() => {
+            // if successful, delete the list item from local list too.
+            _listitem.isChecked = false;
+
+            this.ApistatusService.loading = false;
+            this.ApistatusService.loaded = true;
+            setTimeout(() => {
+              this.ApistatusService.loaded = false;
+            }, 500);
+
+          },
+            error => {
+              console.error(error);
+              alert("The API has thrown an error while attempting to update the list item to checked \n"
+                + "please try again.")
+            }
+          );
+
         }
       }
     })
+
+
+    // 
+
+
+
   }
 
   deleteThisListItem(thisListID, thisListItemID) {
@@ -322,6 +423,9 @@ export class ListComponent implements OnInit {
     let listItemIndexToRemove = this.ListService.listOfLists[listIndex].List.findIndex((ListItem) => ListItem.ListItemID === thisListItemID)
 
     // ======= API request ======== \\
+
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
 
     console.log(this.UserService.userID)
     console.log(thisListID)
@@ -336,6 +440,13 @@ export class ListComponent implements OnInit {
     request.subscribe(() => {
       // if successful, delete the list item from local list too.
       this.ListService.listOfLists[listIndex].List.splice(listItemIndexToRemove, 1);
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
     },
       error => {
         console.error(error);
@@ -345,13 +456,5 @@ export class ListComponent implements OnInit {
     );
 
   }
-
-
-
-
-
-
-
-
 
 }
