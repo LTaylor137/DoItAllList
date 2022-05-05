@@ -60,7 +60,8 @@ export class UserService {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.get<UserRequest[]>("https://localhost:5001/DoItAllList/GetAllUsersFromDB");
+    let request = this.httpClient.get<UserRequest[]>(this.ApistatusService.APIURL + "GetAllUsersFromDB");
+
 
     request.subscribe((response) => {
       // if api request successful. 
@@ -111,7 +112,7 @@ export class UserService {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.post<UserRequest>("https://localhost:5001/DoItAllList/CreateNewUser",
+    let request = this.httpClient.post<UserRequest>(this.ApistatusService.APIURL + "CreateNewUser",
       {
         UserID: newUserID,
         Username: newUsername

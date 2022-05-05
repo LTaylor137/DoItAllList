@@ -7,7 +7,7 @@ const routes: Routes = [
 
   { path: "userselect", component: UserselectComponent },
   { path: "showlist", component: ListComponent },
-  { path: "**", redirectTo: "showlist" }
+  { path: "**", redirectTo: "userselect" }
 
 ];
 @NgModule({

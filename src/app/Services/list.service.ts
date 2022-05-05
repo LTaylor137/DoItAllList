@@ -35,8 +35,8 @@ export class ListService {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.get<ListItemRequest[]>("https://localhost:5001/DoItAllList/GetAllListItemsAndEmptyListsFromDBOfUser?id=" + this.UserService.userID + "");
-
+    let request = this.httpClient.get<ListItemRequest[]>(this.ApistatusService.APIURL + "GetAllListItemsAndEmptyListsFromDBOfUser?id=" + this.UserService.userID + "");
+   
     request.subscribe((response) => {
 
       this.listItemsFromDB = [];
@@ -104,7 +104,7 @@ export class ListService {
       error => {
         console.error(error);
         alert("The API has thrown an error while attempting to fetch the list. \n"
-          + "please try again.")
+          + "possibly due to no userID selected. please logout and select user again.")
       }
     );
 
@@ -160,7 +160,7 @@ export class ListService {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.post<ListRequest>("https://localhost:5001/DoItAllList/CreateNewList",
+    let request = this.httpClient.post<ListRequest>(this.ApistatusService.APIURL + "CreateNewList",
       {
         UserID: this.UserService.userID,
         ListID: newListID,
@@ -193,7 +193,7 @@ export class ListService {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/DeleteListFromDB",
+    let request = this.httpClient.put<ListRequest>(this.ApistatusService.APIURL + "DeleteListFromDB",
       {
         UserID: this.UserService.userID,
         ListID: thisListID

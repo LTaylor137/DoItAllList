@@ -10,4 +10,10 @@ export class ApistatusService {
   public loading: boolean = false;
   public loaded: boolean = false;
 
+// public APIURL: string = "https://localhost:5001/DoItAllList/"
+
+public APIURL: string = "http://dialapi6linux-env.eba-ee2hhybk.ap-southeast-2.elasticbeanstalk.com/DoItAllList/"
+
+
+
 }
