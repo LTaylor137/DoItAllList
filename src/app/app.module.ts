@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -9,6 +10,9 @@ import { ListService } from './Services/list.service';
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { ListComponent } from './Components/list/list.component';
+import { UserService } from './Services/user.service';
+import { ApistatusComponent } from './Components/apistatus/apistatus.component';
+import { UserselectComponent } from './Components/userselect/userselect.component';
 // import { ListItem } from './Classes/ListItem';
 
 
@@ -17,13 +21,16 @@ import { ListComponent } from './Components/list/list.component';
     AppComponent,
     HeaderComponent,
     ListComponent,
-    FooterComponent
+    FooterComponent,
+    ApistatusComponent,
+    UserselectComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [ListService],
+  providers: [ListService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
