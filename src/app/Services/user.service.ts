@@ -81,6 +81,11 @@ export class UserService {
     },
       error => {
         console.error(error);
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
         alert("The API has thrown an error while attempting to retrieve users. \n"
           + "please try again.")
       }
@@ -135,8 +140,16 @@ export class UserService {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to create the list item \n"
-          + "please try again.")
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to create the list item \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
+
       }
     );
 

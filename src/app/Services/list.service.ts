@@ -36,7 +36,7 @@ export class ListService {
     this.ApistatusService.loaded = false;
 
     let request = this.httpClient.get<ListItemRequest[]>(this.ApistatusService.APIURL + "GetAllListItemsAndEmptyListsFromDBOfUser?id=" + this.UserService.userID + "");
-   
+
     request.subscribe((response) => {
 
       this.listItemsFromDB = [];
@@ -103,8 +103,16 @@ export class ListService {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to fetch the list. \n"
-          + "possibly due to no userID selected. please logout and select user again.")
+
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to fetch the list. \n"
+            + "possibly due to no userID selected. please logout and select user again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
       }
     );
 
@@ -180,8 +188,16 @@ export class ListService {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to create the new list. \n"
-          + "please try again.")
+
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to create the new list. \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
       }
     );
   }
@@ -196,9 +212,9 @@ export class ListService {
     let request = this.httpClient.put<ListRequest>(this.ApistatusService.APIURL + "DeleteListFromDB",
       {
         UserID: this.UserService.userID,
-        ListID: thisListID
-        // this.apistatus.loading = true;
-        //   this.ApistatusService.loaded = false;
+        ListID: thisListID,
+        ListTitle: "x",
+        ListColour: "x"
       } as ListRequest);
     request.subscribe(() => {
       console.log("deleting list at index = " + listIndex)
@@ -213,14 +229,22 @@ export class ListService {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to delete the list \n"
-          + "please try again.")
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to delete the list \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
+
       }
     );
 
   }
 
-  
+
   // console.log(ListItem)
 
   // this.listOfLists.push(new List(1, "Shopping List", "var(--clr-heading-green)"))
