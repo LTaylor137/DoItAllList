@@ -9,6 +9,7 @@ export class ApistatusService {
 
   public loading: boolean = false;
   public loaded: boolean = false;
+  public failed: boolean = false;
 
 // public APIURL: string = "https://localhost:5001/DoItAllList/"
 

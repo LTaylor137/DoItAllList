@@ -125,7 +125,7 @@ export class ListComponent implements OnInit {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListColour",
+    let request = this.httpClient.put<ListRequest>(this.ApistatusService.APIURL + "UpdateListColour",
       {
         UserID: this.UserService.userID,
         ListID: thisListID,
@@ -145,8 +145,15 @@ export class ListComponent implements OnInit {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to update the list colour. \n"
-          + "please try again.")
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to update the list colour. \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
       }
     );
   }
@@ -180,7 +187,7 @@ export class ListComponent implements OnInit {
     this.ApistatusService.loading = true;
     this.ApistatusService.loaded = false;
 
-    let request = this.httpClient.put<ListRequest>("https://localhost:5001/DoItAllList/UpdateListTitle",
+    let request = this.httpClient.put<ListRequest>(this.ApistatusService.APIURL + "UpdateListTitle",
       {
         UserID: this.UserService.userID,
         ListID: thisListID,
@@ -201,8 +208,15 @@ export class ListComponent implements OnInit {
     },
       error => {
         console.error(error);
-        alert("The API has thrown an error while attempting to update the list title. \n"
-          + "please try again.")
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to update the list title. \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
       }
     );
   }
@@ -281,7 +295,7 @@ export class ListComponent implements OnInit {
       this.ApistatusService.loading = true;
       this.ApistatusService.loaded = false;
 
-      let request = this.httpClient.post<ListItemRequest>("https://localhost:5001/DoItAllList/PostListItemToDB",
+      let request = this.httpClient.post<ListItemRequest>(this.ApistatusService.APIURL + "PostListItemToDB",
         {
           UserID: this.UserService.userID,
           ListID: thisListID,
@@ -306,8 +320,16 @@ export class ListComponent implements OnInit {
       },
         error => {
           console.error(error);
-          alert("The API has thrown an error while attempting to create the list item \n"
-            + "please try again.")
+          this.ApistatusService.loading = false;
+          this.ApistatusService.failed = true;
+          setTimeout(() => {
+            alert("The API has thrown an error while attempting to create the list item \n"
+              + "please try again.")
+          }, 10);
+          setTimeout(() => {
+            this.ApistatusService.failed = false;
+          }, 500);
+
         }
       );
 
@@ -343,17 +365,17 @@ export class ListComponent implements OnInit {
           console.log(thisListID)
           console.log(thisListItemID)
 
-          let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/UpdateListItemChecked",
+          let request = this.httpClient.put<ListItemRequest>(this.ApistatusService.APIURL + "UpdateListItemChecked",
             {
               UserID: this.UserService.userID,
               ListID: thisListID,
               ListItemID: thisListItemID,
-              isChecked: true
+              isChecked: true,
+              Text: "x"
             } as ListItemRequest);
           request.subscribe(() => {
-            // if successful, delete the list item from local list too.
+            // if successful, check the list item from local list too.
             _listitem.isChecked = true;
-
             this.ApistatusService.loading = false;
             this.ApistatusService.loaded = true;
             setTimeout(() => {
@@ -363,8 +385,16 @@ export class ListComponent implements OnInit {
           },
             error => {
               console.error(error);
-              alert("The API has thrown an error while attempting to update the list item to checked \n"
-                + "please try again.")
+              this.ApistatusService.loading = false;
+              this.ApistatusService.failed = true;
+              setTimeout(() => {
+                alert("The API has thrown an error while attempting to update the list item to checked \n"
+                  + "please try again.")
+              }, 10);
+              setTimeout(() => {
+                this.ApistatusService.failed = false;
+              }, 500);
+
             }
           );
 
@@ -379,15 +409,16 @@ export class ListComponent implements OnInit {
           console.log(thisListID)
           console.log(thisListItemID)
 
-          let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/UpdateListItemChecked",
+          let request = this.httpClient.put<ListItemRequest>(this.ApistatusService.APIURL + "UpdateListItemChecked",
             {
               UserID: this.UserService.userID,
               ListID: thisListID,
               ListItemID: thisListItemID,
-              isChecked: false
+              isChecked: false,
+              Text: "x"
             } as ListItemRequest);
           request.subscribe(() => {
-            // if successful, delete the list item from local list too.
+            // if successful, uncheck the list item from local list too.
             _listitem.isChecked = false;
 
             this.ApistatusService.loading = false;
@@ -399,8 +430,15 @@ export class ListComponent implements OnInit {
           },
             error => {
               console.error(error);
-              alert("The API has thrown an error while attempting to update the list item to checked \n"
-                + "please try again.")
+              this.ApistatusService.loading = false;
+              this.ApistatusService.failed = true;
+              setTimeout(() => {
+                alert("The API has thrown an error while attempting to update the list item to unchecked \n"
+                  + "please try again.")
+              }, 10);
+              setTimeout(() => {
+                this.ApistatusService.failed = false;
+              }, 500);
             }
           );
 
@@ -431,12 +469,17 @@ export class ListComponent implements OnInit {
     console.log(thisListID)
     console.log(thisListItemID)
 
-    let request = this.httpClient.put<ListItemRequest>("https://localhost:5001/DoItAllList/DeleteListItemFromDB",
+    let request = this.httpClient.put<ListItemRequest>(this.ApistatusService.APIURL + "DeleteListItemFromDB",
       {
+
         UserID: this.UserService.userID,
         ListID: thisListID,
-        ListItemID: thisListItemID
+        ListItemID: thisListItemID,
+        Text: "x",
+        isChecked: true
+
       } as ListItemRequest);
+ 
     request.subscribe(() => {
       // if successful, delete the list item from local list too.
       this.ListService.listOfLists[listIndex].List.splice(listItemIndexToRemove, 1);
@@ -449,9 +492,16 @@ export class ListComponent implements OnInit {
 
     },
       error => {
-        console.error(error);
-        alert("The API has thrown an error while attempting to delete the list item \n"
-          + "please try again.")
+         console.error(error);
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          alert("The API has thrown an error while attempting to delete the list item \n"
+            + "please try again.")
+        }, 10);
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
       }
     );
 

@@ -2,8 +2,10 @@
 <div class="header-container">
 
     <div class="header-button-row">
-        <button *ngIf="this.isLogoutOptionShowing === true" class="logout-button" (click)="navigateToUserSelect()">log out</button>
-        <button class="username-button" (click)="showHideLogoutOption()">Welcome, {{this.UserService.username}}</button>
+        <!-- <button *ngIf="this.isLogoutOptionShowing === true" class="logout-button" (click)="navigateToUserSelect()">log out</button> -->
+        <!-- <button class="username-button" (click)="showHideLogoutOption()">Welcome, {{this.UserService.username}}</button> -->
+        <button class="logout-button" (click)="navigateToUserSelect()">log out</button>
+        <button class="username-button" >Welcome, {{this.UserService.username}}</button>
     </div>
 
 </div>

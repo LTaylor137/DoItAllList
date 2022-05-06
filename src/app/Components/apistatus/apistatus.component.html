@@ -8,3 +8,8 @@
         done
     </a>
 </div>
+<div *ngIf="this.ApistatusService.failed === true" class="apiStatusFailed">
+    <a class="material-icons">
+        error
+    </a>
+</div>

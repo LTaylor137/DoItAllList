@@ -1,6 +1,7 @@
 
   .apiStatusLoading,
-  .apiStatusLoaded {
+  .apiStatusLoaded,
+  .apiStatusFailed {
     /* background-color: rgb(210, 212, 210); */
     display: flex;
     height: 10vw;
@@ -26,6 +27,12 @@
 
   .apiStatusLoaded .material-icons {
     color: lime;
+  font-size: 50px;
+  font-weight: 1000;
+  }
+
+  .apiStatusFailed .material-icons {
+    color: rgb(158, 43, 43);
   font-size: 50px;
   font-weight: 1000;
   }
