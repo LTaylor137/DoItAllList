@@ -13,6 +13,7 @@ import { ListComponent } from './Components/list/list.component';
 import { UserService } from './Services/user.service';
 import { ApistatusComponent } from './Components/apistatus/apistatus.component';
 import { UserselectComponent } from './Components/userselect/userselect.component';
+import { LoginComponent } from './Components/login/login.component';
 // import { ListItem } from './Classes/ListItem';
 
 
@@ -23,7 +24,8 @@ import { UserselectComponent } from './Components/userselect/userselect.componen
     ListComponent,
     FooterComponent,
     ApistatusComponent,
-    UserselectComponent
+    UserselectComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

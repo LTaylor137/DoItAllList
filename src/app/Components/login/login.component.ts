@@ -5,12 +5,11 @@ import { ApistatusService } from 'src/app/Services/apistatus.service';
 
 
 @Component({
-  selector: 'app-userselect',
-  templateUrl: './userselect.component.html',
-  styleUrls: ['./userselect.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-
-export class UserselectComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(public UserService: UserService, public ListService: ListService, public ApistatusService: ApistatusService) { }
 
@@ -31,7 +30,7 @@ export class UserselectComponent implements OnInit {
     this.UserService.navigateToShowList(passedUserID, passedUsername)
   }
 
-  activateAddUser() {
+  activateRegisterUser() {
     if (this.isAddUserActive === false) {
       this.isAddUserActive = true;
     } else {
@@ -52,6 +51,10 @@ export class UserselectComponent implements OnInit {
       this.UserService.addNewUser(newUsernameText);
       this.isAddUserActive = false;
     }
+  }
+
+  register() {
+
   }
 
 }
