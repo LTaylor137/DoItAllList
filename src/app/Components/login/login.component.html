@@ -5,28 +5,7 @@
         <a class="login-heading-text">User Login</a>
     </div>
 
-    <!-- instruction text
-    <div class="instruction-text-container">
-        <a class="instruction-text">This section is a work in progress. <br>
-            Passwords / Logins are not implemented. <br>
-            New users can be added but not removed.<br>
-            Click on a user to see their lists.</a>
-    </div> -->
-
-    <!-- user items -->
-    <!-- <div *ngFor="let thisUser of this.UserService.UsersFromDB" class="login-content-container">
-
-        <div class="login-item-row">
-            <div (click)="logInAsUser(thisUser.UserID, thisUser.Username)" class="login-item-container">
-                <div class="login-item-accent" style="background-color: {{this.randomColour}}"> </div>
-                <div class="login-item-text-container">
-                    <a class="login-item-text">{{thisUser.Username}}</a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- input new user -->
+    <!-- input -->
     <div class="input-row-container">
         <div class="input-row">
             <div class="login-item-accent" style="background-color: {{this.randomColour}}">
@@ -42,32 +21,15 @@
         </div>
     </div>
 
-
-
     <!-- buttons -->
     <div class="login-button-container">
         <button class="login-button" style="background-color: {{this.randomColour}}"
-            (click)="activateRegisterUser(thisList.ListID)">
+            (click)="activateRegisterUser()">
             <a>register</a></button>
         <button class="login-button" style="background-color: {{this.randomColour}}"
-            (click)="register(thisList.ListID)">
+            (click)="register()">
             <a>login</a></button>
     </div>
-
-
-    <!-- add new user button -->
-    <!-- <div *ngIf="this.isAddUserActive === false" class="add-user-row">
-        <button class="add-user-button" (click)="activateRegisterUser()"
-            style="background-color: {{this.randomColour}}">+</button>
-    </div>
-    <div *ngIf="this.isAddUserActive === true" class="add-user-row"> -->
-        <!-- <button class="cancel-button" (click)="stopAddUser()"> -->
-            <!-- <a class="material-icons"> -->
-            <!-- x -->
-            <!-- </a> -->
-        <!-- </button> -->
-    <!-- </div> -->
-
 
     <!-- footer -->
     <div class="login-footer" >

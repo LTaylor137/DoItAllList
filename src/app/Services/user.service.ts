@@ -39,6 +39,11 @@ export class UserService {
     this.router.navigateByUrl('/userselect');
   }
 
+  navigateToLogin() {
+    console.log("navigateToLogin clicked")
+    this.router.navigateByUrl('/login');
+  }
+
   navigateToShowList(passedUserID, passedUsername) {
     this.userID = passedUserID;
     this.username = passedUsername;

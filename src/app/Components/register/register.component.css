@@ -1,0 +1,201 @@
+.register-container {
+    width: 80vw;
+    max-width: 500px;
+    min-width: 150px;
+    margin-top: 16%;
+    margin-bottom: 5%;
+    border-style: none;
+    background-color: var(--clr-white);
+  }
+  
+  /* ------------------------------------------- heading ------------------------------------------- */
+  
+  .register-heading-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--clr-heading-green);
+    padding-left: 5%;
+    height: 12vw;
+    max-height: 70px;
+    align-items: center;
+  }
+  
+  .register-heading-text-container {
+    display: flex;
+    text-align: center;
+    width: 200vw;
+    max-width: 435px;
+  }
+  
+  .register-heading-text {
+    font-family: "Kalam", cursive;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 6vw, 2.3rem);
+    color: var(--clr-dark-grey);
+    user-select: none;
+  }
+  
+  .instruction-text-container {
+    display: flex;
+    /* height: 10vh; */
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .instruction-text {
+    font-family: "ABeeZee", sans-serif;
+    color: var(--clr-dark-grey);
+    font-weight: 700;
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
+    line-height: 28.5px;
+    text-align: center;
+  }
+  
+  /* ------------------------------------------- input ------------------------------------------- */
+  
+  .input-row-container {
+    padding-top: 5%;
+    /* padding-bottom: 5%; */
+  }
+  
+  .input-row {
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    height: 12vw;
+    max-height: 60px;
+  }
+  
+  .register-item-accent {
+    height: 12vw;
+    max-height: 60px;
+    width: 3vw;
+    max-width: 12.5px;
+    position: absolute;
+    z-index: 2;
+    background-color: var(--clr-heading-green);
+  }
+  
+  /* .register-item-text-container {
+    width: 86%;
+    margin: 1.5% 0% 0% 6.5%;
+  } */
+  
+  .register-item-text {
+    font-family: "Kalam", cursive;
+    font-weight: 100;
+    font-size: clamp(0.5rem, 6vw, 2rem);
+    color: var(--clr-dark-grey);
+  }
+  
+  .input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.1%;
+  }
+  
+  .input-field {
+    border-style: none;
+    width: 100vw;
+    min-width: 95px;
+    font-size: clamp(0.3rem, 4vw, 1.5rem);
+    height: 12vw;
+    max-height: 60px;
+    padding: 0% 0% 0% 6.5%;
+    background-color: var(--clr-lightest-grey);
+  }
+  
+  .input-field:focus {
+    border-style: solid;
+    border-width: 3px;
+    outline: none !important;
+    height: 12vw;
+    max-height: 54px;
+    padding: 0% 0% 0% 5.7%;
+  }
+  /*   
+    .add-user-button {
+      font-family: "ABeeZee", sans-serif;
+      font-weight: bolder;
+      border-radius: 100vw;
+      font-size: clamp(0.5rem, 15vw, 6rem);
+      height: 12vw;
+      max-height: 65px;
+      min-height: 15px;
+    } */
+  
+  /* .add-button {
+      padding-left: 3.5%;
+      padding-right: 3.5%;
+      background-color: var(--clr-heading-green);
+    }
+     */
+  /* .cancel-button {
+      display: flex;
+      border-radius: 100vw;
+      height: 12vw;
+      max-height: 65px;
+      min-height: 15px;
+      align-items: center;
+      font-family: "ABeeZee", sans-serif;
+      font-weight: bolder;
+      font-size: clamp(0.3rem, 12vw, 4rem);
+      background-color: var(--clr-red);
+      z-index: 2;
+      padding-bottom: 2%;
+      padding-right: 3.5%;
+      padding-left: 3.5%;
+      color: rgb(148, 9, 9);
+    } */
+  
+  /* ------------------------------------------- buttons ------------------------------------------- */
+  
+  button {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.3rem, 3vw, 1.5rem);
+    color: var(--clr-white);
+    z-index: 2;
+    height: 12vw;
+    max-height: 60px;
+    cursor: pointer;
+  }
+  
+  .register-button-container {
+    display: flex;
+    position: relative;
+    height: 10vh;
+    padding-left: 7.5%;
+    padding-right: 7.5%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .register-button {
+    font-family: "ABeeZee", sans-serif;
+    color: var(--clr-white);
+    padding-left: 5.5%;
+    padding-right: 5.5%;
+    font-size: clamp(0.3rem, 4vw, 1.3rem);
+    margin-right: 0.5%;
+    height: 6vh;
+    max-height: 55px;
+    border-radius: 1.5vh;
+  }
+  
+  /* ------------------------------------------- footer ------------------------------------------- */
+  
+  .register-footer {
+      height: 2vh;
+  }
+  

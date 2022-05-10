@@ -1,0 +1,53 @@
+<div class="register-container">
+
+    <!-- user heading -->
+    <div class="register-heading-container" style="background-color: {{this.randomColour}}">
+        <a class="register-heading-text">Register User</a>
+    </div>
+
+    <!-- input new user -->
+    <div class="input-row-container">
+        <div class="input-row">
+            <div class="register-item-accent" style="background-color: {{this.randomColour}}">
+            </div>
+            <input class="input-field" type="text" id="adduserinputfield" name="username" placeholder="username"
+                style="border-color: {{this.randomColour}}">
+        </div>
+        <div class="input-row">
+            <div class="register-item-accent" style="background-color: {{this.randomColour}}">
+            </div>
+            <input class="input-field" type="text" id="adduserinputfield" name="password" placeholder="password"
+                style="border-color: {{this.randomColour}}">
+        </div>
+    </div>
+
+    <!-- buttons -->
+    <div class="register-button-container">
+        <button class="register-button" style="background-color: {{this.randomColour}}"
+            (click)="cancelRegisterUser()">
+            <a>cancel</a></button>
+        <button class="register-button" style="background-color: {{this.randomColour}}"
+            (click)="register()">
+            <a>register</a></button>
+    </div>
+
+
+    <!-- add new user button -->
+    <!-- <div *ngIf="this.isAddUserActive === false" class="add-user-row">
+        <button class="add-user-button" (click)="activateRegisterUser()"
+            style="background-color: {{this.randomColour}}">+</button>
+    </div>
+    <div *ngIf="this.isAddUserActive === true" class="add-user-row"> -->
+        <!-- <button class="cancel-button" (click)="stopAddUser()"> -->
+            <!-- <a class="material-icons"> -->
+            <!-- x -->
+            <!-- </a> -->
+        <!-- </button> -->
+    <!-- </div> -->
+
+
+    <!-- footer -->
+    <div class="register-footer" >
+    </div>
+
+</div>

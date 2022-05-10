@@ -14,6 +14,7 @@ import { UserService } from './Services/user.service';
 import { ApistatusComponent } from './Components/apistatus/apistatus.component';
 import { UserselectComponent } from './Components/userselect/userselect.component';
 import { LoginComponent } from './Components/login/login.component';
+import { RegisterComponent } from './Components/register/register.component';
 // import { ListItem } from './Classes/ListItem';
 
 
@@ -25,7 +26,8 @@ import { LoginComponent } from './Components/login/login.component';
     FooterComponent,
     ApistatusComponent,
     UserselectComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

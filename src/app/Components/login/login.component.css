@@ -57,7 +57,6 @@
 
 .input-row-container {
   padding-top: 5%;
-  /* padding-bottom: 5%; */
 }
 
 .input-row {
@@ -78,11 +77,6 @@
   z-index: 2;
   background-color: var(--clr-heading-green);
 }
-
-/* .login-item-text-container {
-  width: 86%;
-  margin: 1.5% 0% 0% 6.5%;
-} */
 
 .login-item-text {
   font-family: "Kalam", cursive;
@@ -117,40 +111,6 @@
   max-height: 54px;
   padding: 0% 0% 0% 5.7%;
 }
-/*   
-  .add-user-button {
-    font-family: "ABeeZee", sans-serif;
-    font-weight: bolder;
-    border-radius: 100vw;
-    font-size: clamp(0.5rem, 15vw, 6rem);
-    height: 12vw;
-    max-height: 65px;
-    min-height: 15px;
-  } */
-
-/* .add-button {
-    padding-left: 3.5%;
-    padding-right: 3.5%;
-    background-color: var(--clr-heading-green);
-  }
-   */
-/* .cancel-button {
-    display: flex;
-    border-radius: 100vw;
-    height: 12vw;
-    max-height: 65px;
-    min-height: 15px;
-    align-items: center;
-    font-family: "ABeeZee", sans-serif;
-    font-weight: bolder;
-    font-size: clamp(0.3rem, 12vw, 4rem);
-    background-color: var(--clr-red);
-    z-index: 2;
-    padding-bottom: 2%;
-    padding-right: 3.5%;
-    padding-left: 3.5%;
-    color: rgb(148, 9, 9);
-  } */
 
 /* ------------------------------------------- buttons ------------------------------------------- */
 
@@ -174,7 +134,8 @@ button {
 .login-button-container {
   display: flex;
   position: relative;
-  height: 9vh;
+  height: 18vw;
+  max-height: 90px;
   padding-left: 7.5%;
   padding-right: 7.5%;
   justify-content: space-around;
@@ -188,22 +149,23 @@ button {
   padding-right: 5.5%;
   font-size: clamp(0.3rem, 4vw, 1.3rem);
   margin-right: 0.5%;
-  height: 6vh;
-  max-height: 52px;
+  height: 10vw;
+  max-height: 50px;
   border-radius: 1.5vh;
 }
 
 /* ------------------------------------------- footer ------------------------------------------- */
 
 .login-footer {
-    font-family: "ABeeZee", sans-serif;
-    font-size: clamp(0.3rem, 3vw, 1rem);
-    color: var(--clr-dark-grey);
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    height: 5vh;
-    padding-bottom: 3vh;
-    cursor: pointer;
+  font-family: "ABeeZee", sans-serif;
+  font-size: clamp(0.3rem, 3vw, 1rem);
+  color: var(--clr-dark-grey);
+  display: flex;
+  justify-content: center;
+  height: 10vw;
+  margin-top: 7.5px;
+  line-height: -50px;
+  max-height: 50px;
+  cursor: pointer;
+  align-items: flex-start;
 }
