@@ -13,6 +13,6 @@ export class ApistatusService {
 
 // public APIURL: string = "https://localhost:5001/DoItAllList/"
 
-public APIURL: string = "https://dialapi6linux-env.eba-ee2hhybk.ap-southeast-2.elasticbeanstalk.com/DoItAllList/"
+public APIURL: string = "http://dialapi6linux-env.eba-ee2hhybk.ap-southeast-2.elasticbeanstalk.com/DoItAllList/"
 
 }
