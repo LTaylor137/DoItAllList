@@ -1,22 +1,17 @@
 # DoItAllList
 
-### *** THIS IS A WORK IN PROGRESS ***
+### *** WORK IN PROGRESS ***
 
-The goal of this project was to develope something that I would actually use. 
+Simple To Do List app. using SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS services.
 
-I gave myself the following criteria:
-
-- work on mobile devices
-- accessible from anywhere
-- store data on database
-- hosted on free services
-- due to basic hosting services, infrequent and basic API calls
+Criteria:
+- mobile friendly
 - multiple user logins
 
 #### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
 
 ![Thumbnail](/DoItAllListThumbnail.jpg)
 
-### *** THIS IS A WORK IN PROGRESS ***
+### *** WORK IN PROGRESS ***
 
 ##### This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.4.
