@@ -2,14 +2,15 @@
 
 ### *** WORK IN PROGRESS ***
 
-Simple To Do List app. using SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS services.
+Simple To Do List app to practice API requests and deployment of live applications. 
+Uses SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS services.
 
 - mobile friendly
 - multiple user logins (not yet implemented)
 - customise/edit lists
 - add multiple items in sequence using voice to text on mobile.
 
-#### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
+#### Amazon S3 Bucket Link: http://dials3bucket.s3-website-ap-southeast-2.amazonaws.com/userselect
 
 ![Thumbnail](/DoItAllListThumbnail.png)
 
