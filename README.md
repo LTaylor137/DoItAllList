@@ -10,7 +10,7 @@ Criteria:
 
 #### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
 
-![Thumbnail](/DoItAllListThumbnail.jpg)
+
 
 ### *** WORK IN PROGRESS ***
 
