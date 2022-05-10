@@ -4,13 +4,14 @@
 
 Simple To Do List app. using SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS services.
 
-Criteria:
 - mobile friendly
-- multiple user logins
+- multiple user logins (not yet implemented)
+- customise/edit lists
+- add multiple items in sequence using voice to text on mobile.
 
 #### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
 
-![Thumbnail](/DoItAllListThumbnail.jpg)
+![Thumbnail](/DoItAllListThumbnail.png)
 
 ### *** WORK IN PROGRESS ***
 
