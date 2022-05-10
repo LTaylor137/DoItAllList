@@ -11,7 +11,7 @@ Simple To Do List app. using SQL database, .NET C# Restful API, and an Angular F
 
 #### Github Pages Link: https://ltaylor137.github.io/DoItAllList/
 
-![Thumbnail](/DoItAllListThumbnail.png)
+
 
 ### *** WORK IN PROGRESS ***
 
