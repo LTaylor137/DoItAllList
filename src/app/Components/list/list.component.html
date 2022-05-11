@@ -65,7 +65,7 @@
 
     <!-- list items -->
     <div *ngIf="thisList.isShowListActive === true" id="list-content-container{{thisList.ListID}}"
-        class="list-content-container">
+        class="list-content-container-open">
 
         <div *ngFor="let thisListItem of thisList.List" class="list-item-row">
             <div class="list-item-container" (click)="checkThisListItem(thisList.ListID, thisListItem.ListItemID)">

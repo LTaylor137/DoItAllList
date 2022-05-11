@@ -26,20 +26,36 @@ export class LoginComponent implements OnInit {
     this.randomColour = getRandomColour;
   }
 
-  logInAsUser(passedUserID, passedUsername) {
-    this.UserService.navigateToShowList(passedUserID, passedUsername)
-  }
+  login() {
 
-  activateRegisterUser() {
-    if (this.isAddUserActive === false) {
-      this.isAddUserActive = true;
+    let inputUsername: string;
+    let inputPassword: string;
+    let errormsg: string = '';
+
+    // check un
+    if ((<HTMLInputElement>document.getElementById("usernameinput")).value === '') {
+      console.log("no text detected in username input")
+      errormsg = "no text detected in username input"
     } else {
-      this.isAddUserActive = false;
+      inputUsername = (<HTMLInputElement>document.getElementById("usernameinput")).value
+      // check pw
+      if ((<HTMLInputElement>document.getElementById("passwordinput")).value === '') {
+        console.log("no text detected in password input")
+        errormsg = "no text detected in password input"
+      } else {
+        inputPassword = (<HTMLInputElement>document.getElementById("passwordinput")).value
+      }
+    }
+    if (errormsg === '') {
+    this.UserService.attemptLogin(inputUsername, inputPassword)
+    } else {
+      alert(errormsg)
     }
   }
 
-  stopAddUser() {
-    this.isAddUserActive = false;
+
+  activateRegisterUser() {
+    this.UserService.navigateToRegister();
   }
 
   addNewUser() {

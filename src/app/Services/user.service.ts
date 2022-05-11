@@ -8,7 +8,9 @@ import { ListItemfromDB } from '../Classes/ListItemfromDB';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ApistatusService } from './apistatus.service';
 import { UserRequest } from '../models/UserRequestModel';
+import { UserResponse } from '../models/UserResponseModel';
 import { UserFromDB } from '../Classes/UsersFromDB';
+import { throwError } from 'rxjs';
 
 
 
@@ -22,6 +24,9 @@ export class UserService {
   public username: string = localStorage.getItem('username')
   public UsersFromDB: UserFromDB[] = [];
 
+  // _userid: number | null;
+  // _username: string | null;
+  // _password: string | null;
 
   constructor(private router: Router, private httpClient: HttpClient, private ApistatusService: ApistatusService) { }
 
@@ -30,9 +35,9 @@ export class UserService {
     localStorage.setItem('userID', jsonData)
   }
 
-  getuserID() {
-    return localStorage.getItem('userID')
-  }
+  // getuserID() {
+  //   return localStorage.getItem('userID')
+  // }
 
   navigateToUserSelect() {
     console.log("navigateToUserSelect clicked")
@@ -44,10 +49,81 @@ export class UserService {
     this.router.navigateByUrl('/login');
   }
 
+  navigateToRegister() {
+    console.log("avigateToRegister clicked")
+    this.router.navigateByUrl('/register');
+  };
+
+  attemptLogin(inputUsername, inputPassword) {
+    console.log("inputUsername = " + inputUsername)
+    console.log("inputPassword = " + inputPassword) 
+
+    let resultID: number = 0;
+    let resultusername: string = '';
+
+    // ======= API request ======== \\
+
+    this.ApistatusService.loading = true;
+    this.ApistatusService.loaded = false;
+
+    let request = this.httpClient.post<UserResponse>(this.ApistatusService.APIURL + "GetSingleUserIDAndUsernameFromDB",
+    {
+      Username: inputUsername,
+      Password: inputPassword
+    } as UserResponse);
+
+    request.subscribe((response) => {
+      // if api returns null
+      if (response === null){
+        console.log("null value was recieved")
+        console.log("username or password not found.")
+
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
+        setTimeout(() => {
+        alert("The API has thrown an error while attempting to log in. \n"
+          + "please check your username and password and try again.")
+        }, 10);
+      } else {
+      // if api request successful. 
+      // console.log(response)
+      // console.log("response.UserID " + response.UserID)
+      // console.log("response.Username " + response.Username)
+      resultID = response.UserID;
+      resultusername = response.Username
+      console.log("resultID " + resultID)
+      console.log("resultusername " + resultusername)
+
+      this.ApistatusService.loading = false;
+      this.ApistatusService.loaded = true;
+      setTimeout(() => {
+        this.ApistatusService.loaded = false;
+      }, 500);
+
+      // navigate
+      this.navigateToShowList(resultID, resultusername);
+    }
+    },
+      error => {
+        console.error(error);
+        this.ApistatusService.loading = false;
+        this.ApistatusService.failed = true;
+        setTimeout(() => {
+          this.ApistatusService.failed = false;
+        }, 500);
+        alert("The API has thrown an error while attempting to log in. \n"
+          + "please check your username and password and try again." + error)
+      }
+    );
+  }
+
+
   navigateToShowList(passedUserID, passedUsername) {
     this.userID = passedUserID;
     this.username = passedUsername;
-
     //store items in local storage.
     localStorage.setItem('userID', passedUserID)
     localStorage.setItem('username', passedUsername)
@@ -98,8 +174,6 @@ export class UserService {
       }
     );
   }
-
-
 
   addNewUser(passedNewUsername) {
     // create a temporary array of available ID's and select the first available ID

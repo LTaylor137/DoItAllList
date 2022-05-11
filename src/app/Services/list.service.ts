@@ -116,7 +116,9 @@ export class ListService {
       }
     );
 
-    this.changeListClass();
+    //   setTimeout(() => {
+    //   this.changeListClass();
+    // }, 500);
 
   }
 
@@ -134,14 +136,17 @@ export class ListService {
   }
 
   // a quick hack to change list container class to non-animated version on initial load.
+  // child elements were having the same animation applied to them.
   // could not get list-content-container's class to change to .list-content-container-open at the same time 
   // as it becoming true. so the class applied is .list-content-container-open instead.
   // and it is changed to .list-content-container after initially loading.
   changeListClass() {
     setTimeout(() => {
-      this.listOfLists.forEach(List => {
-        document.getElementById("list-content-container" + List.ListID).className = "list-content-container";
-        console.log("List class of " + List.ListID + " updated")
+      setTimeout(() => {
+        this.listOfLists.forEach(List => {
+          document.getElementById("list-content-container" + List.ListID).className = "list-content-container";
+          console.log("List class of LISTID " + List.ListID + ", updated")
+        }, 500);
       }, 500);
     });
   }

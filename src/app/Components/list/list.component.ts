@@ -24,14 +24,18 @@ export class ListComponent implements OnInit {
   constructor(public ListService: ListService, private router: Router, private httpClient: HttpClient, private UserService: UserService, public ApistatusService: ApistatusService) {
   }
 
-  // @Input() List: List;
 
-  refresh(): void {
-    window.location.reload();
-  }
 
   ngOnInit(): void {
     this.ListService.populateList()
+    setTimeout(() => {
+      console.log("--------- page load changeListClass")
+      this.ListService.changeListClass()
+    }, 500);
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   returnThisListIndex(thisListID) {
@@ -49,7 +53,6 @@ export class ListComponent implements OnInit {
 
     if (this.ListService.listOfLists[listIndex].isShowListActive === false) {
       this.ListService.listOfLists[listIndex].isShowListActive = true;
-
       setTimeout(() => {
         document.getElementById("list-content-container" + thisListID).className = "list-content-container";
       }, 450);

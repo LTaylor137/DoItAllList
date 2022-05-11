@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  padding-bottom: 1%;
+  padding-bottom: 2%;
   height: 5vw;
   max-height: 50px;
 }

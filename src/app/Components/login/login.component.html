@@ -10,14 +10,14 @@
         <div class="input-row">
             <div class="login-item-accent" style="background-color: {{this.randomColour}}">
             </div>
-            <input class="input-field" type="text" id="adduserinputfield" name="username" placeholder="username"
-                style="border-color: {{this.randomColour}}">
+            <input class="input-field" type="text" id="usernameinput" name="username" placeholder="username"
+            (keyup.enter)="login()" style="border-color: {{this.randomColour}}">
         </div>
         <div class="input-row">
             <div class="login-item-accent" style="background-color: {{this.randomColour}}">
             </div>
-            <input class="input-field" type="text" id="adduserinputfield" name="password" placeholder="password"
-                style="border-color: {{this.randomColour}}">
+            <input class="input-field" type="text" id="passwordinput" name="password" placeholder="password"
+            (keyup.enter)="login()" style="border-color: {{this.randomColour}}">
         </div>
     </div>
 
@@ -27,7 +27,7 @@
             (click)="activateRegisterUser()">
             <a>register</a></button>
         <button class="login-button" style="background-color: {{this.randomColour}}"
-            (click)="register()">
+            (click)="login()">
             <a>login</a></button>
     </div>
 

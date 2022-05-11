@@ -17,13 +17,13 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  // showHideLogoutOption(){
-  //   if (this.isLogoutOptionShowing === false) {
-  //     this.isLogoutOptionShowing = true;
-  //   } else if (this.isLogoutOptionShowing === true) {
-  //     this.isLogoutOptionShowing = false;
-  //   }
-  // }
+  showHideLogoutOption(){
+    if (this.isLogoutOptionShowing === false) {
+      this.isLogoutOptionShowing = true;
+    } else if (this.isLogoutOptionShowing === true) {
+      this.isLogoutOptionShowing = false;
+    }
+  }
 
   navigateToUserSelect()
   {

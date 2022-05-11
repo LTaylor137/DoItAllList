@@ -1,7 +1,7 @@
 
 export interface UserRequest {
 
-    UserID: number;
-    Username: string;
+    UserID: number | null;
+    Username: string | null;
 
 }

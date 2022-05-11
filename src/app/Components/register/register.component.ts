@@ -30,24 +30,16 @@ export class RegisterComponent implements OnInit {
     this.UserService.navigateToShowList(passedUserID, passedUsername)
   }
 
-  activateRegisterUser() {
-    if (this.isAddUserActive === false) {
-      this.isAddUserActive = true;
-    } else {
-      this.isAddUserActive = false;
-    }
-  }
-
   cancelRegisterUser() {
 this.UserService.navigateToLogin();
   }
 
   addNewUser() {
     console.log("addNewUser = ")
-    if ((<HTMLInputElement>document.getElementById("adduserinputfield")).value === '') {
+    if ((<HTMLInputElement>document.getElementById("usernameinputfield")).value === '') {
       console.log("no text detected")
     } else {
-      let newUsernameText = (<HTMLInputElement>document.getElementById("adduserinputfield")).value
+      let newUsernameText = (<HTMLInputElement>document.getElementById("usernameinputfield")).value
       this.UserService.addNewUser(newUsernameText);
       this.isAddUserActive = false;
     }
