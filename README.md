@@ -10,7 +10,7 @@ Uses SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS
 - customise/edit lists
 - add multiple items in sequence using voice to text on mobile.
 
-#### Amazon S3 Bucket Link: http://dials3bucket.s3-website-ap-southeast-2.amazonaws.com/userselect
+#### Amazon S3 Bucket Link: https://bit.ly/3laomqW 
 
 ![Thumbnail](/DoItAllListThumbnail.png)
 
