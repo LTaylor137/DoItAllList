@@ -25,9 +25,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  navigateToUserSelect()
+//   navigateToUserSelect()
+//   {
+// this.UserService.navigateToUserSelect()
+//   }
+
+  navigateToLogin()
   {
-this.UserService.navigateToUserSelect()
+this.UserService.navigateToLogin()
   }
 
 }

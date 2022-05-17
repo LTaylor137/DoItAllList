@@ -53,24 +53,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  loginAsGuest() {
+
+    this.UserService.attemptLogin("Guest", "Guest")
+
+  }
 
   activateRegisterUser() {
     this.UserService.navigateToRegister();
-  }
-
-  addNewUser() {
-    console.log("addNewUser = ")
-    if ((<HTMLInputElement>document.getElementById("adduserinputfield")).value === '') {
-      console.log("no text detected")
-    } else {
-      let newUsernameText = (<HTMLInputElement>document.getElementById("adduserinputfield")).value
-      this.UserService.addNewUser(newUsernameText);
-      this.isAddUserActive = false;
-    }
-  }
-
-  register() {
-
   }
 
 }

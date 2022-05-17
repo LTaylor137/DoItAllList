@@ -56,7 +56,7 @@ export class UserService {
 
   attemptLogin(inputUsername, inputPassword) {
     console.log("inputUsername = " + inputUsername)
-    console.log("inputPassword = " + inputPassword) 
+    console.log("inputPassword = " + inputPassword)
 
     let resultID: number = 0;
     let resultusername: string = '';
@@ -67,14 +67,14 @@ export class UserService {
     this.ApistatusService.loaded = false;
 
     let request = this.httpClient.post<UserResponse>(this.ApistatusService.APIURL + "GetSingleUserIDAndUsernameFromDB",
-    {
-      Username: inputUsername,
-      Password: inputPassword
-    } as UserResponse);
+      {
+        Username: inputUsername,
+        Password: inputPassword
+      } as UserResponse);
 
     request.subscribe((response) => {
       // if api returns null
-      if (response === null){
+      if (response === null) {
         console.log("null value was recieved")
         console.log("username or password not found.")
 
@@ -84,28 +84,28 @@ export class UserService {
           this.ApistatusService.failed = false;
         }, 500);
         setTimeout(() => {
-        alert("The API has thrown an error while attempting to log in. \n"
-          + "please check your username and password and try again.")
+          alert("The API has thrown an error while attempting to log in. \n"
+            + "please check your username and password and try again.")
         }, 10);
       } else {
-      // if api request successful. 
-      // console.log(response)
-      // console.log("response.UserID " + response.UserID)
-      // console.log("response.Username " + response.Username)
-      resultID = response.UserID;
-      resultusername = response.Username
-      console.log("resultID " + resultID)
-      console.log("resultusername " + resultusername)
+        // if api request successful. 
+        // console.log(response)
+        // console.log("response.UserID " + response.UserID)
+        // console.log("response.Username " + response.Username)
+        resultID = response.UserID;
+        resultusername = response.Username
+        console.log("resultID " + resultID)
+        console.log("resultusername " + resultusername)
 
-      this.ApistatusService.loading = false;
-      this.ApistatusService.loaded = true;
-      setTimeout(() => {
-        this.ApistatusService.loaded = false;
-      }, 500);
+        this.ApistatusService.loading = false;
+        this.ApistatusService.loaded = true;
+        setTimeout(() => {
+          this.ApistatusService.loaded = false;
+        }, 500);
 
-      // navigate
-      this.navigateToShowList(resultID, resultusername);
-    }
+        // navigate
+        this.navigateToShowList(resultID, resultusername);
+      }
     },
       error => {
         console.error(error);
@@ -145,7 +145,6 @@ export class UserService {
 
     let request = this.httpClient.get<UserRequest[]>(this.ApistatusService.APIURL + "GetAllUsersFromDB");
 
-
     request.subscribe((response) => {
       // if api request successful. 
 
@@ -175,7 +174,8 @@ export class UserService {
     );
   }
 
-  addNewUser(passedNewUsername) {
+  addNewUser(passedNewUsername, passedNewPassword) {
+
     // create a temporary array of available ID's and select the first available ID
     let newUserIDsAvailable: number[] = [];
     for (let i = 1; i < (this.UsersFromDB.length + 2); i++) {
@@ -189,53 +189,72 @@ export class UserService {
       }
     }
     let newUserID: number = newUserIDsAvailable[0];
+    let usernameexists = false;
+
+    this.UsersFromDB.forEach(user => {
+      if (user.Username === passedNewUsername) {
+        console.log(user.Username)
+        usernameexists = true
+      }
+    });
+
     let newUsername: string = passedNewUsername;
+    let newPassword: string = passedNewPassword;
     // console.log("newUserID " + newUserID)
     // console.log("newUsername " + newUsername)
 
-    // ======= API request ======== \\
+    if (usernameexists === false) {
 
-    this.ApistatusService.loading = true;
-    this.ApistatusService.loaded = false;
+      // ======= API request ======== \\
 
-    let request = this.httpClient.post<UserRequest>(this.ApistatusService.APIURL + "CreateNewUser",
-      {
-        UserID: newUserID,
-        Username: newUsername
-      } as UserRequest);
-    request.subscribe(() => {
-      // add the new List using that new ID, only if api request successful.
-      this.UsersFromDB.push(new UserFromDB(newUserID, newUsername));
+      this.ApistatusService.loading = true;
+      this.ApistatusService.loaded = false;
 
-      this.UsersFromDB.forEach(User => {
-        console.log(User)
+      let request2 = this.httpClient.post<UserResponse>(this.ApistatusService.APIURL + "CreateNewUser",
+        {
+          UserID: newUserID,
+          Username: newUsername,
+          Password: newPassword
+        } as UserResponse);
+      request2.subscribe(() => {
 
+        console.log("new user added successfully: " + newUserID + newUsername + newPassword)
         this.ApistatusService.loading = false;
         this.ApistatusService.loaded = true;
         setTimeout(() => {
           this.ApistatusService.loaded = false;
         }, 500);
 
-      });
-      (<HTMLInputElement>document.getElementById("adduserinputfield")).value = '';
-    },
-      error => {
-        console.error(error);
-        this.ApistatusService.loading = false;
-        this.ApistatusService.failed = true;
         setTimeout(() => {
-          alert("The API has thrown an error while attempting to create the list item \n"
-            + "please try again.")
-        }, 10);
-        setTimeout(() => {
-          this.ApistatusService.failed = false;
-        }, 500);
+          this.navigateToLogin()
+        }, 1000);
+      },
+        error => {
+          console.error(error);
+          this.ApistatusService.loading = false;
+          this.ApistatusService.failed = true;
+          setTimeout(() => {
+            alert("The API has thrown an error while attempting to register the new user \n"
+              + "please try again.")
+          }, 10);
+          setTimeout(() => {
+            this.ApistatusService.failed = false;
+          }, 500);
 
-      }
-    );
+        }
+      );
+
+    } else if (usernameexists === true) {
+      console.log("the username already existed and was not added = " + passedNewUsername)
+      alert("This username already exists. \n"
+        + "please try another username.");
+    }
 
   }
+
 }
+
+
 
 
 

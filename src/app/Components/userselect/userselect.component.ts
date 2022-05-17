@@ -43,15 +43,15 @@ export class UserselectComponent implements OnInit {
     this.isAddUserActive = false;
   }
 
-  addNewUser() {
-    console.log("addNewUser = ")
-    if ((<HTMLInputElement>document.getElementById("adduserinputfield")).value === '') {
-      console.log("no text detected")
-    } else {
-      let newUsernameText = (<HTMLInputElement>document.getElementById("adduserinputfield")).value
-      this.UserService.addNewUser(newUsernameText);
-      this.isAddUserActive = false;
-    }
-  }
+  // addNewUser() {
+  //   console.log("addNewUser = ")
+  //   if ((<HTMLInputElement>document.getElementById("adduserinputfield")).value === '') {
+  //     console.log("no text detected")
+  //   } else {
+  //     let newUsernameText = (<HTMLInputElement>document.getElementById("adduserinputfield")).value
+  //     this.UserService.addNewUser(newUsernameText);
+  //     this.isAddUserActive = false;
+  //   }
+  // }
 
 }

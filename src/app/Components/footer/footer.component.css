@@ -18,17 +18,17 @@
 }
 
 button {
-    display: flex;    
-    align-items: center;
-    border-style: none;
-    color: var(--clr-dark-grey);
-    background-color: var(--clr-lightest-grey);
-    font-family: "ABeeZee", sans-serif;
-    font-weight: bolder;
-    border-radius: 100vw;
-    font-size: clamp(1rem, 16vw, 6.5rem);
-    height: 12vw;
-    max-height: 70px;
-    min-height: 15px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-style: none;
+  color: var(--clr-dark-grey);
+  background-color: var(--clr-lightest-grey);
+  cursor: pointer;
+  font-family: "ABeeZee", sans-serif;
+  font-weight: bolder;
+  border-radius: 100vw;
+  font-size: clamp(1rem, 20vw, 7rem);
+  height: 15vw;
+  max-height: 80px;
+  min-height: 25px;
 }

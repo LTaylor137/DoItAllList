@@ -1,10 +1,13 @@
 .header-container {
   width: 92vw;
+  height: 10vw;
+  max-height: 100px;
   min-width: 150px;
   border-style: none;
   padding-right: 3%;
-  padding-top: 2.5%;
-  padding-bottom: 2.5%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .header-button-row {
@@ -29,7 +32,7 @@
   font-size: clamp(0.5rem, 4vw, 1.5rem);
   height: 7vw;
   max-height: 50px;
-  padding: 2vw;
+  padding: 1vw;
   margin-left: 2vw;
   min-height: 15px;
   cursor: pointer;

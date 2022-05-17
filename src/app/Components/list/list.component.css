@@ -41,7 +41,7 @@
 .list-heading-input {
   font-family: "Kalam", cursive;
   font-weight: 600;
-  font-size: clamp(0.8rem, 6vw, 2.3rem);
+  font-size: clamp(0.8rem, 7vw, 2.3rem);
   color: var(--clr-dark-grey);
   /* padding-top: 2%; */
   user-select: none;
@@ -385,8 +385,8 @@
   justify-content: center;
   margin-top: 5%;
   margin-bottom: 7.5%;
-  height: 12vw;
-  max-height: 60px;
+  height: 13vw;
+  max-height: 70px;
 }
 
 .input-list-item-container {
@@ -452,10 +452,10 @@ button {
   font-family: "ABeeZee", sans-serif;
   font-weight: bolder;
   border-radius: 100vw;
-  font-size: clamp(1rem, 16vw, 6.5rem);
-  height: 12vw;
-  max-height: 70px;
-  min-height: 15px;
+  font-size: clamp(1rem, 20vw, 7rem);
+  height: 15vw;
+  max-height: 80px;
+  min-height: 25px;
 }
 
 .add-button {

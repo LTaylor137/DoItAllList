@@ -35,14 +35,41 @@ this.UserService.navigateToLogin();
   }
 
   addNewUser() {
-    console.log("addNewUser = ")
-    if ((<HTMLInputElement>document.getElementById("usernameinputfield")).value === '') {
-      console.log("no text detected")
+    // console.log("addNewUser = ")
+    // if ((<HTMLInputElement>document.getElementById("usernameinputfield")).value === '') {
+    //   console.log("no text detected")
+    // } else {
+    //   let newUsernameText = (<HTMLInputElement>document.getElementById("usernameinputfield")).value
+    //   this.UserService.addNewUser(newUsernameText);
+    //   this.isAddUserActive = false;
+    // }
+
+    let inputUsername: string;
+    let inputPassword: string;
+    let errormsg: string = '';
+
+
+    // check un
+    if ((<HTMLInputElement>document.getElementById("regusernameinput")).value === '') {
+      console.log("no text detected in username input")
+      errormsg = "no text detected in username input"
     } else {
-      let newUsernameText = (<HTMLInputElement>document.getElementById("usernameinputfield")).value
-      this.UserService.addNewUser(newUsernameText);
-      this.isAddUserActive = false;
+      inputUsername = (<HTMLInputElement>document.getElementById("regusernameinput")).value
+      // check pw
+      if ((<HTMLInputElement>document.getElementById("regpasswordinput")).value === '') {
+        console.log("no text detected in password input")
+        errormsg = "no text detected in password input"
+      } else {
+        inputPassword = (<HTMLInputElement>document.getElementById("regpasswordinput")).value
+      }
     }
+    if (errormsg === '') {
+    this.UserService.addNewUser(inputUsername, inputPassword)
+    } else {
+      alert(errormsg)
+    }
+
+
   }
 
   register() {
