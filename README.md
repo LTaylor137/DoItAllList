@@ -1,7 +1,5 @@
 # DoItAllList
 
-### *** WORK IN PROGRESS ***
-
 Simple To Do List app to practice API requests and deployment of live applications. 
 Uses SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS services.
 
@@ -13,7 +11,5 @@ Uses SQL database, .NET C# Restful API, and an Angular Frontend. Deployed on AWS
 #### Amazon S3 Bucket Link: https://bit.ly/3laomqW 
 
 ![Thumbnail](/DoItAllListThumbnail.png)
-
-### *** WORK IN PROGRESS ***
 
 ##### This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.4.
